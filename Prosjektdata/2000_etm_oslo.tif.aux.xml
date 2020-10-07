@@ -1,0 +1,646 @@
+<PAMDataset>
+  <SRS>PROJCS["WGS_1984_UTM_Zone_32N",GEOGCS["GCS_WGS_1984",DATUM["WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",9.0],PARAMETER["Scale_Factor",0.9996],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0],AUTHORITY["EPSG","32632"]]</SRS>
+  <Metadata />
+  <Metadata domain="OVERVIEWS">
+    <MDI key="OVERVIEW_FILE">C:\Users\paulvol\AppData\Local\ESRI\rasterproxies/000000___lagringshotell_geofag_kurs_GEG_GEG2240_data_2000_etm_oslo.tif.ovr</MDI>
+  </Metadata>
+  <Metadata domain="ESRI">
+    <MDI key="PyramidResamplingType">NEAREST</MDI>
+  </Metadata>
+  <Metadata domain="xml:ESRI" format="xml">
+    <GeodataXform xsi:type="typens:PolynomialXform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:typens="http://www.esri.com/schemas/ArcGIS/10.4">
+      <PolynomialOrder>1</PolynomialOrder>
+      <SpatialReference xsi:type="typens:ProjectedCoordinateSystem">
+        <WKT>PROJCS["WGS_1984_UTM_Zone_32N",GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",9.0],PARAMETER["Scale_Factor",0.9996],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0],AUTHORITY["EPSG",32632]]</WKT>
+        <XOrigin>-5120900</XOrigin>
+        <YOrigin>-9998100</YOrigin>
+        <XYScale>450445547.3910538</XYScale>
+        <ZOrigin>-100000</ZOrigin>
+        <ZScale>10000</ZScale>
+        <MOrigin>-100000</MOrigin>
+        <MScale>10000</MScale>
+        <XYTolerance>0.001</XYTolerance>
+        <ZTolerance>0.001</ZTolerance>
+        <MTolerance>0.001</MTolerance>
+        <HighPrecision>true</HighPrecision>
+        <WKID>32632</WKID>
+        <LatestWKID>32632</LatestWKID>
+      </SpatialReference>
+      <SourceGCPs xsi:type="typens:ArrayOfDouble">
+        <Double>557323.03122418816</Double>
+        <Double>6689036.4819371775</Double>
+        <Double>556000.4883145208</Double>
+        <Double>6691604.7844193792</Double>
+        <Double>560964.55969741766</Double>
+        <Double>6688939.7776580919</Double>
+        <Double>560852.1506024024</Double>
+        <Double>6689247.502947229</Double>
+        <Double>563079.6686112968</Double>
+        <Double>6690317.7119991574</Double>
+        <Double>556410.34186348272</Double>
+        <Double>6683465.5571744805</Double>
+        <Double>557587.51688498573</Double>
+        <Double>6686796.5162048666</Double>
+        <Double>557921.72726658208</Double>
+        <Double>6686948.7660703445</Double>
+        <Double>559954.94739136018</Double>
+        <Double>6685542.8032185603</Double>
+        <Double>560028.6945190361</Double>
+        <Double>6685609.0720724445</Double>
+        <Double>559818.64541589061</Double>
+        <Double>6685478.4961394398</Double>
+        <Double>567853.28380836803</Double>
+        <Double>6686968.3293303847</Double>
+        <Double>563890.14449520805</Double>
+        <Double>6680440.6969462261</Double>
+        <Double>605727.82775158901</Double>
+        <Double>6689010.7886429057</Double>
+        <Double>605799.38718663552</Double>
+        <Double>6689334.7121931342</Double>
+        <Double>611697.56402063882</Double>
+        <Double>6691392.831094482</Double>
+        <Double>611367.55389956455</Double>
+        <Double>6691383.1563537307</Double>
+        <Double>604428.22806630062</Double>
+        <Double>6683895.5979151484</Double>
+        <Double>609129.37924579717</Double>
+        <Double>6685842.1571367756</Double>
+        <Double>617475.59387256403</Double>
+        <Double>6680238.1810386553</Double>
+        <Double>560309.96588247956</Double>
+        <Double>6638372.2408612743</Double>
+        <Double>560648.87793819001</Double>
+        <Double>6642173.4308370054</Double>
+        <Double>565967.02773187123</Double>
+        <Double>6639236.6179917529</Double>
+        <Double>563791.43948503979</Double>
+        <Double>6638095.115683578</Double>
+        <Double>564336.92770325148</Double>
+        <Double>6640039.1236630511</Double>
+        <Double>558735.37601538177</Double>
+        <Double>6637094.557728623</Double>
+        <Double>560008.33056006336</Double>
+        <Double>6636160.0207984913</Double>
+        <Double>557984.2102199567</Double>
+        <Double>6632727.6858747546</Double>
+        <Double>562700.1115619872</Double>
+        <Double>6629421.7885096529</Double>
+        <Double>562776.57619472768</Double>
+        <Double>6629132.8503592405</Double>
+        <Double>562812.0183328751</Double>
+        <Double>6629283.0540722031</Double>
+        <Double>565641.36007849779</Double>
+        <Double>6630526.4398662504</Double>
+        <Double>564055.76137564122</Double>
+        <Double>6630602.0698718885</Double>
+        <Double>604382.03295589762</Double>
+        <Double>6639262.0366424406</Double>
+        <Double>604025.78251516027</Double>
+        <Double>6638747.2156605776</Double>
+        <Double>603882.30229391239</Double>
+        <Double>6640759.2425994892</Double>
+        <Double>611347.54398747801</Double>
+        <Double>6641458.6598700052</Double>
+        <Double>608875.33962861227</Double>
+        <Double>6639026.5373667665</Double>
+        <Double>608912.75348333013</Double>
+        <Double>6639340.3260450298</Double>
+        <Double>616691.2638508284</Double>
+        <Double>6639150.7434234349</Double>
+        <Double>606270.33078192582</Double>
+        <Double>6633404.4287761608</Double>
+        <Double>605077.02319315216</Double>
+        <Double>6633023.1107967114</Double>
+        <Double>609996.14180535323</Double>
+        <Double>6633014.8198007327</Double>
+        <Double>608880.44939968386</Double>
+        <Double>6633593.2135519302</Double>
+        <Double>615845.08042872488</Double>
+        <Double>6634841.4189328076</Double>
+        <Double>615882.394881877</Double>
+        <Double>6634603.8179118056</Double>
+        <Double>613268.07339151215</Double>
+        <Double>6634730.2541599525</Double>
+        <Double>607475.64460781997</Double>
+        <Double>6632507.7737450395</Double>
+        <Double>607089.4410592682</Double>
+        <Double>6631405.8861413989</Double>
+        <Double>607500.31771902461</Double>
+        <Double>6632134.9348056857</Double>
+        <Double>610132.79177822114</Double>
+        <Double>6629322.6625237474</Double>
+        <Double>611096.68647301663</Double>
+        <Double>6628708.3010780523</Double>
+        <Double>614651.96329477185</Double>
+        <Double>6632547.304181464</Double>
+        <Double>613473.93007999833</Double>
+        <Double>6630280.5852147182</Double>
+        <Double>584212.80586066039</Double>
+        <Double>6661689.0742077362</Double>
+        <Double>584470.91436477925</Double>
+        <Double>6660461.917673938</Double>
+        <Double>587344.01377350546</Double>
+        <Double>6662410.4446824761</Double>
+        <Double>592966.20886868471</Double>
+        <Double>6660448.9172987519</Double>
+        <Double>593365.84096009959</Double>
+        <Double>6659116.7010185495</Double>
+        <Double>595265.02577620174</Double>
+        <Double>6658164.3512404654</Double>
+        <Double>597335.38673865772</Double>
+        <Double>6656252.789336781</Double>
+        <Double>591295.2457968602</Double>
+        <Double>6649810.7278597513</Double>
+        <Double>589637.18355219194</Double>
+        <Double>6650078.3289954932</Double>
+        <Double>597276.55409985373</Double>
+        <Double>6648758.5166064901</Double>
+        <Double>593086.94084348169</Double>
+        <Double>6650504.6935301544</Double>
+        <Double>593184.10336644633</Double>
+        <Double>6650196.9909911258</Double>
+        <Double>591790.55353092414</Double>
+        <Double>6687590.9265958378</Double>
+        <Double>591896.18766149937</Double>
+        <Double>6687871.8761524307</Double>
+        <Double>594377.21372773929</Double>
+        <Double>6691004.8712241193</Double>
+        <Double>595712.10483736533</Double>
+        <Double>6690026.4314263873</Double>
+        <Double>587291.86104075762</Double>
+        <Double>6683972.4880651636</Double>
+        <Double>583699.90090845444</Double>
+        <Double>6683278.1933576707</Double>
+        <Double>587613.41304298583</Double>
+        <Double>6684135.4383229893</Double>
+        <Double>591043.27641404665</Double>
+        <Double>6685771.0682489276</Double>
+        <Double>592176.74824136216</Double>
+        <Double>6679206.6750541339</Double>
+        <Double>589240.97548915958</Double>
+        <Double>6679635.1827536887</Double>
+        <Double>595179.03120323189</Double>
+        <Double>6681024.3823044533</Double>
+        <Double>557693.30201614555</Double>
+        <Double>6662248.6537056929</Double>
+        <Double>561027.67892084154</Double>
+        <Double>6659686.0953924684</Double>
+        <Double>567888.19299207476</Double>
+        <Double>6658211.1306030704</Double>
+        <Double>565714.66510730225</Double>
+        <Double>6657258.4335589819</Double>
+        <Double>563974.3118378286</Double>
+        <Double>6653608.3474620087</Double>
+        <Double>565908.59466069879</Double>
+        <Double>6657905.3133487711</Double>
+        <Double>563663.05099835456</Double>
+        <Double>6650389.4515563557</Double>
+        <Double>565015.03961334634</Double>
+        <Double>6648708.045532967</Double>
+        <Double>565554.47307860968</Double>
+        <Double>6648671.4422209207</Double>
+        <Double>564130.6704523504</Double>
+        <Double>6649055.0841311803</Double>
+        <Double>606095.70866882161</Double>
+        <Double>6653539.5318936259</Double>
+        <Double>606883.45398996386</Double>
+        <Double>6653639.1855625929</Double>
+        <Double>608773.20997192897</Double>
+        <Double>6653281.7105690921</Double>
+        <Double>613264.54274213139</Double>
+        <Double>6654152.3430541158</Double>
+        <Double>614389.86996149621</Double>
+        <Double>6655538.8564240579</Double>
+        <Double>607720.97416542622</Double>
+        <Double>6650021.0722611183</Double>
+        <Double>605379.43350639811</Double>
+        <Double>6651533.3279178925</Double>
+        <Double>607788.0147442515</Double>
+        <Double>6649381.2032487588</Double>
+        <Double>608240.25826961466</Double>
+        <Double>6651085.5026910193</Double>
+        <Double>608417.41524615698</Double>
+        <Double>6650857.539531854</Double>
+        <Double>609092.08920085407</Double>
+        <Double>6652903.1093718773</Double>
+        <Double>587997.61473501113</Double>
+        <Double>6638366.8706206288</Double>
+        <Double>586294.98734442436</Double>
+        <Double>6639376.6774035059</Double>
+        <Double>587405.81816192623</Double>
+        <Double>6638406.9164451174</Double>
+        <Double>590165.21010484209</Double>
+        <Double>6639965.5705170836</Double>
+        <Double>588792.28752283426</Double>
+        <Double>6640043.7618673109</Double>
+        <Double>594787.82985541469</Double>
+        <Double>6640331.0679956321</Double>
+        <Double>596520.70256485883</Double>
+        <Double>6639958.2474016026</Double>
+        <Double>595441.419949173</Double>
+        <Double>6640168.1028326983</Double>
+        <Double>585183.85302864655</Double>
+        <Double>6635740.3346598335</Double>
+        <Double>591870.52959491394</Double>
+        <Double>6635423.1685015289</Double>
+        <Double>588491.97296473361</Double>
+        <Double>6636020.9668730348</Double>
+        <Double>596445.88544267218</Double>
+        <Double>6636699.5880958056</Double>
+        <Double>594075.57784852537</Double>
+        <Double>6636371.3337634178</Double>
+        <Double>593592.34024031635</Double>
+        <Double>6635966.83253932</Double>
+        <Double>583803.98295917397</Double>
+        <Double>6630580.1968143294</Double>
+        <Double>584268.40416017</Double>
+        <Double>6629361.3131936276</Double>
+        <Double>583967.10530713957</Double>
+        <Double>6630661.8754731771</Double>
+        <Double>590202.79448812711</Double>
+        <Double>6632011.7629195098</Double>
+        <Double>590265.98932829988</Double>
+        <Double>6632385.2850895654</Double>
+        <Double>593416.08699589456</Double>
+        <Double>6629286.9686839171</Double>
+        <Double>595710.61325014522</Double>
+        <Double>6629213.8572528176</Double>
+        <Double>595471.94958164345</Double>
+        <Double>6630796.8364176825</Double>
+      </SourceGCPs>
+      <TargetGCPs xsi:type="typens:ArrayOfDouble">
+        <Double>557348.48207822372</Double>
+        <Double>6689038.3406066885</Double>
+        <Double>556060.05363812973</Double>
+        <Double>6691583.2411236763</Double>
+        <Double>560998.42792859604</Double>
+        <Double>6688930.2927474976</Double>
+        <Double>560884.24832501938</Double>
+        <Double>6689246.1623840332</Double>
+        <Double>563134.60416760971</Double>
+        <Double>6690330.0438766479</Double>
+        <Double>556460.35391583969</Double>
+        <Double>6683471.7760620117</Double>
+        <Double>557648.72598615219</Double>
+        <Double>6686807.4502258301</Double>
+        <Double>557951.09708753147</Double>
+        <Double>6686962.6659851084</Double>
+        <Double>560000.23038831283</Double>
+        <Double>6685532.3800735483</Double>
+        <Double>560071.40776410548</Double>
+        <Double>6685598.692932128</Double>
+        <Double>559871.32198682358</Double>
+        <Double>6685457.9385223389</Double>
+        <Double>567897.3439899974</Double>
+        <Double>6686964.3054656982</Double>
+        <Double>563927.86402478733</Double>
+        <Double>6680428.0416412354</Double>
+        <Double>605771.41977658798</Double>
+        <Double>6689002.8517227173</Double>
+        <Double>605860.92998090317</Double>
+        <Double>6689319.5102233887</Double>
+        <Double>611759.57371106674</Double>
+        <Double>6691397.0481233597</Double>
+        <Double>611425.45191541244</Double>
+        <Double>6691374.2138442984</Double>
+        <Double>604467.38148084213</Double>
+        <Double>6683919.7717437744</Double>
+        <Double>609174.14065137436</Double>
+        <Double>6685841.2577819824</Double>
+        <Double>617510.25149121811</Double>
+        <Double>6680243.7648925791</Double>
+        <Double>560343.88552442123</Double>
+        <Double>6638388.345954895</Double>
+        <Double>560681.72594037582</Double>
+        <Double>6642161.4805884371</Double>
+        <Double>565989.31125989486</Double>
+        <Double>6639237.3303222647</Double>
+        <Double>563837.44906201889</Double>
+        <Double>6638089.6091079712</Double>
+        <Double>564370.16022840072</Double>
+        <Double>6640042.4081382742</Double>
+        <Double>558784.97822919418</Double>
+        <Double>6637097.1867141714</Double>
+        <Double>560022.06505170395</Double>
+        <Double>6636168.9954299927</Double>
+        <Double>558006.61155286361</Double>
+        <Double>6632732.7419586182</Double>
+        <Double>562736.08948865463</Double>
+        <Double>6629420.4049530029</Double>
+        <Double>562811.58039441635</Double>
+        <Double>6629121.9629516611</Double>
+        <Double>562842.11474195053</Double>
+        <Double>6629311.0146331796</Double>
+        <Double>565667.96436658432</Double>
+        <Double>6630524.2981109619</Double>
+        <Double>564084.9793201976</Double>
+        <Double>6630598.8157653799</Double>
+        <Double>604413.40256085922</Double>
+        <Double>6639273.9824981699</Double>
+        <Double>604056.60048642685</Double>
+        <Double>6638738.9582290659</Double>
+        <Double>603920.823063522</Double>
+        <Double>6640767.5832366943</Double>
+        <Double>611386.72190442611</Double>
+        <Double>6641461.5018768311</Double>
+        <Double>608926.17377820553</Double>
+        <Double>6639041.47914505</Double>
+        <Double>608967.62784925033</Double>
+        <Double>6639348.8852348328</Double>
+        <Double>616722.49367871811</Double>
+        <Double>6639152.3839187622</Double>
+        <Double>606299.84415784408</Double>
+        <Double>6633389.1438903809</Double>
+        <Double>605115.13863149215</Double>
+        <Double>6633031.8449707041</Double>
+        <Double>610036.49004712631</Double>
+        <Double>6633004.0842590332</Double>
+        <Double>608918.19424787094</Double>
+        <Double>6633577.7754821777</Double>
+        <Double>615885.44620862533</Double>
+        <Double>6634850.3490142822</Double>
+        <Double>615926.90288892318</Double>
+        <Double>6634600.650466918</Double>
+        <Double>613307.2886158519</Double>
+        <Double>6634725.3214416504</Double>
+        <Double>607504.54928174545</Double>
+        <Double>6632516.3052978506</Double>
+        <Double>607129.92013898422</Double>
+        <Double>6631405.7776794424</Double>
+        <Double>607559.77325025131</Double>
+        <Double>6632119.0648040762</Double>
+        <Double>610171.87417951156</Double>
+        <Double>6629325.9543457041</Double>
+        <Double>611138.58803906967</Double>
+        <Double>6628719.6178894043</Double>
+        <Double>614682.24923291733</Double>
+        <Double>6632539.7624816895</Double>
+        <Double>613514.93557324936</Double>
+        <Double>6630287.7815093994</Double>
+        <Double>584258.00325742294</Double>
+        <Double>6661689.206079483</Double>
+        <Double>584510.40151181747</Double>
+        <Double>6660452.1915550241</Double>
+        <Double>587391.68319287826</Double>
+        <Double>6662402.6985197067</Double>
+        <Double>593011.54694715072</Double>
+        <Double>6660447.6575431824</Double>
+        <Double>593407.5567432933</Double>
+        <Double>6659130.801727294</Double>
+        <Double>595320.4113728099</Double>
+        <Double>6658169.6164398193</Double>
+        <Double>597388.50611463119</Double>
+        <Double>6656248.0834350586</Double>
+        <Double>591348.76920667221</Double>
+        <Double>6649800.5437774658</Double>
+        <Double>589673.81843152572</Double>
+        <Double>6650060.1235656738</Double>
+        <Double>597308.76212659408</Double>
+        <Double>6648762.5412139902</Double>
+        <Double>593128.04313245346</Double>
+        <Double>6650509.8378753662</Double>
+        <Double>593214.17109265854</Double>
+        <Double>6650187.8960723877</Double>
+        <Double>591838.47727551986</Double>
+        <Double>6687579.9647827139</Double>
+        <Double>591931.60064282943</Double>
+        <Double>6687870.9077911368</Double>
+        <Double>594428.82790723373</Double>
+        <Double>6690994.9441452026</Double>
+        <Double>595776.98540845443</Double>
+        <Double>6690011.4206085205</Double>
+        <Double>587319.91351666977</Double>
+        <Double>6683974.6617279053</Double>
+        <Double>583754.26316991379</Double>
+        <Double>6683273.4858856201</Double>
+        <Double>587663.51342359115</Double>
+        <Double>6684131.8126831055</Double>
+        <Double>591073.76177564193</Double>
+        <Double>6685783.3384552002</Double>
+        <Double>592231.20724072983</Double>
+        <Double>6679206.0389099121</Double>
+        <Double>589272.55273023178</Double>
+        <Double>6679624.6839752197</Double>
+        <Double>595226.65917554428</Double>
+        <Double>6680995.8637847891</Double>
+        <Double>557731.45626416733</Double>
+        <Double>6662256.9985971451</Double>
+        <Double>561083.12340894272</Double>
+        <Double>6659688.4229965201</Double>
+        <Double>567914.4145924144</Double>
+        <Double>6658202.1942672729</Double>
+        <Double>565763.0542408519</Double>
+        <Double>6657270.2165222168</Double>
+        <Double>563983.96122327377</Double>
+        <Double>6653601.0050354013</Double>
+        <Double>565956.14069715072</Double>
+        <Double>6657892.565963746</Double>
+        <Double>563706.53240552475</Double>
+        <Double>6650398.2505645752</Double>
+        <Double>565063.62572827865</Double>
+        <Double>6648706.2526702881</Double>
+        <Double>565596.85787549545</Double>
+        <Double>6648676.972503663</Double>
+        <Double>564184.5475422435</Double>
+        <Double>6649038.9637298584</Double>
+        <Double>606122.77829709579</Double>
+        <Double>6653538.6821594238</Double>
+        <Double>606916.64871945907</Double>
+        <Double>6653652.2585906982</Double>
+        <Double>608827.41398969223</Double>
+        <Double>6653278.8101348877</Double>
+        <Double>613305.18555799057</Double>
+        <Double>6654151.5765380869</Double>
+        <Double>614439.08773389389</Double>
+        <Double>6655544.7314758301</Double>
+        <Double>607774.4960667186</Double>
+        <Double>6650013.6284179697</Double>
+        <Double>605427.24779096176</Double>
+        <Double>6651539.8143768301</Double>
+        <Double>607838.64454999496</Double>
+        <Double>6649395.5807647705</Double>
+        <Double>608290.52888837387</Double>
+        <Double>6651077.5356445313</Double>
+        <Double>608457.85462537338</Double>
+        <Double>6650871.1889648438</Double>
+        <Double>609138.24994245102</Double>
+        <Double>6652913.2703247061</Double>
+        <Double>588029.60248151352</Double>
+        <Double>6638385.1809310913</Double>
+        <Double>586333.03143659164</Double>
+        <Double>6639369.1230354309</Double>
+        <Double>587434.17705121567</Double>
+        <Double>6638423.9183349609</Double>
+        <Double>590189.38463178196</Double>
+        <Double>6639968.7832832327</Double>
+        <Double>588834.31478467514</Double>
+        <Double>6640055.00452423</Double>
+        <Double>594815.96972241928</Double>
+        <Double>6640341.3639450073</Double>
+        <Double>596556.47014966537</Double>
+        <Double>6639964.2875404349</Double>
+        <Double>595459.4602009349</Double>
+        <Double>6640180.7168083191</Double>
+        <Double>585203.81265225937</Double>
+        <Double>6635730.0560302744</Double>
+        <Double>591899.3946339183</Double>
+        <Double>6635434.4002761841</Double>
+        <Double>588518.1590000682</Double>
+        <Double>6636032.9259338379</Double>
+        <Double>596486.29255261947</Double>
+        <Double>6636714.5271606436</Double>
+        <Double>594111.60450330307</Double>
+        <Double>6636379.9752731323</Double>
+        <Double>593626.39304700424</Double>
+        <Double>6635953.8742675791</Double>
+        <Double>583827.35079064895</Double>
+        <Double>6630578.9236907959</Double>
+        <Double>584307.33498921921</Double>
+        <Double>6629355.5137023935</Double>
+        <Double>584005.0931545787</Double>
+        <Double>6630669.3212585449</Double>
+        <Double>590239.05219617416</Double>
+        <Double>6632026.9303436279</Double>
+        <Double>590291.02590528061</Double>
+        <Double>6632383.6891479492</Double>
+        <Double>593456.45414319576</Double>
+        <Double>6629294.8416137695</Double>
+        <Double>595749.01160779526</Double>
+        <Double>6629208.3361816406</Double>
+        <Double>595485.26223340561</Double>
+        <Double>6630802.5210113525</Double>
+      </TargetGCPs>
+    </GeodataXform>
+  </Metadata>
+  <PAMRasterBand band="1">
+    <Histograms>
+      <HistItem>
+        <HistMin>-0,5</HistMin>
+        <HistMax>255,5</HistMax>
+        <BucketCount>256</BucketCount>
+        <IncludeOutOfRange>1</IncludeOutOfRange>
+        <Approximate>0</Approximate>
+        <HistCounts>0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|0|1|1|0|1|0|0|0|2|1|2|5|1|4|4|10|58|186|793|2940|9940|27704|65417|135593|235443|346985|433053|468599|453113|404490|344078|283296|230689|189284|156022|130020|109853|92746|79467|68660|59452|52276|45846|41391|36933|34020|31260|29160|27006|25282|23858|22629|21204|20024|19206|18046|17572|16731|16022|15131|14274|13899|13245|12881|12445|12044|11358|10629|10376|9814|9170|8451|7776|7272|6580|6028|5252|4617|3981|3396|2847|2421|1907|1611|1298|1050|843|623|562|427|359|314|272|205|210|186|177|150|154|118|120|110|91|89|73|67|67|63|58|51|52|41|42|37|37|28|24|36|29|25|21|11|18|14|14|16|13|15|18|13|9|14|8|6|6|1|6|6|4|9|8|3|8|3|8|5|2|8|4|2|2|4|4|2|4|5|2|3|2|6|3|2|6|1|6|2|2|1|3|0|2|0|2|3|1|5|1|0|3|2|2|1|1|0|0|2|0|2|1|0|2|0|2|2|0|2|0|0|1|1|1|0|0|0|0|0|0|0|2|1|1|1|0|0|0|0|0|0|1|0|1|2|0|2|0|1|13</HistCounts>
+      </HistItem>
+    </Histograms>
+    <Metadata>
+      <MDI key="LAYER_TYPE">athematic</MDI>
+      <MDI key="STATISTICS_COVARIANCES">108.1844646175996</MDI>
+      <MDI key="STATISTICS_MAXIMUM">255</MDI>
+      <MDI key="STATISTICS_MEAN">61,651663437301</MDI>
+      <MDI key="STATISTICS_MEDIAN">5.1572214366032e-145</MDI>
+      <MDI key="STATISTICS_MINIMUM">28</MDI>
+      <MDI key="STATISTICS_MODE">2.4372805549091e-282</MDI>
+      <MDI key="STATISTICS_SKIPFACTORX">1</MDI>
+      <MDI key="STATISTICS_SKIPFACTORY">1</MDI>
+      <MDI key="STATISTICS_STDDEV">10,401176117036</MDI>
+    </Metadata>
+  </PAMRasterBand>
+  <PAMRasterBand band="2">
+    <Histograms>
+      <HistItem>
+        <HistMin>-0,5</HistMin>
+        <HistMax>255,5</HistMax>
+        <BucketCount>256</BucketCount>
+        <IncludeOutOfRange>1</IncludeOutOfRange>
+        <Approximate>0</Approximate>
+        <HistCounts>0|1|0|0|0|0|1|1|0|0|2|1|0|0|1|2|2|1|0|0|2|5|3|4|14|42|216|1142|5224|16901|40533|69247|93049|105978|113704|135725|175809|219953|264581|300146|320391|317929|296380|262611|229184|199526|173948|154287|138130|123411|110648|98692|88230|78764|70738|63802|57012|51255|46146|41260|37430|33655|30702|27893|25694|23734|22287|20946|19499|18476|17650|17105|16110|15472|14744|14395|13487|13019|12239|11772|11193|10915|10390|9794|9422|9255|8844|8388|8104|7917|7591|7030|6764|6261|5754|5385|4949|4602|4122|3504|3227|2752|2479|2085|1760|1423|1195|1016|818|619|532|443|368|296|259|168|151|134|113|108|85|78|65|84|51|58|34|48|42|35|28|33|40|41|22|24|22|22|26|26|19|20|14|11|11|14|17|8|12|10|12|6|6|7|5|8|4|6|2|4|2|2|4|3|7|2|3|3|0|4|3|4|0|4|2|5|5|5|0|2|4|3|1|2|1|3|4|2|1|1|0|3|1|0|0|1|0|1|0|1|0|1|3|0|0|4|0|1|1|1|2|0|0|0|1|1|1|0|2|1|0|1|0|1|0|0|0|0|0|0|1|2|2|1|1|2|1|0|1|0|1|1|0|0|0|1|0|0|0|0|0|0|0|1|0|12</HistCounts>
+      </HistItem>
+    </Histograms>
+    <Metadata>
+      <MDI key="LAYER_TYPE">athematic</MDI>
+      <MDI key="STATISTICS_COVARIANCES">157.1950069278098</MDI>
+      <MDI key="STATISTICS_MAXIMUM">255</MDI>
+      <MDI key="STATISTICS_MEAN">46,149156431528</MDI>
+      <MDI key="STATISTICS_MEDIAN">4.6380895913844e-234</MDI>
+      <MDI key="STATISTICS_MINIMUM">1</MDI>
+      <MDI key="STATISTICS_MODE">9.4964535338159e-283</MDI>
+      <MDI key="STATISTICS_SKIPFACTORX">1</MDI>
+      <MDI key="STATISTICS_SKIPFACTORY">1</MDI>
+      <MDI key="STATISTICS_STDDEV">12,53774329486</MDI>
+    </Metadata>
+  </PAMRasterBand>
+  <PAMRasterBand band="3">
+    <Histograms>
+      <HistItem>
+        <HistMin>-0,5</HistMin>
+        <HistMax>255,5</HistMax>
+        <BucketCount>256</BucketCount>
+        <IncludeOutOfRange>1</IncludeOutOfRange>
+        <Approximate>0</Approximate>
+        <HistCounts>0|11|3|0|1|0|3|3|1|0|3|7|10|37|48|140|343|980|2791|7726|19804|41399|71949|99527|114630|122039|135743|160647|189745|214817|230779|240298|239160|231622|218761|202173|184320|166818|149146|135100|122663|110684|102217|93463|86222|79983|74381|69035|64805|60221|55442|51456|47820|44580|41233|38110|35087|32656|30430|27914|25729|24175|22023|20597|19234|17740|16787|16004|14782|14326|13755|13094|12819|12086|11519|11345|10926|10775|10293|10279|9951|9800|9526|9386|9257|9154|9055|8856|8478|8537|8369|7962|8175|7881|7737|7638|7581|7191|7021|6950|6940|6633|6402|6291|6030|6015|5724|5472|5353|5147|4666|4573|4298|4107|3892|3624|3375|3179|2863|2592|2328|2077|1880|1748|1490|1414|1130|1029|890|682|601|586|454|393|320|268|233|211|158|146|115|92|75|68|77|63|46|49|40|45|25|27|25|31|21|19|22|11|13|30|18|23|12|12|8|17|13|15|15|10|7|11|12|6|7|10|4|8|4|6|5|8|3|3|3|4|0|4|3|5|2|3|2|7|2|3|2|4|2|0|2|5|4|0|0|2|2|2|2|2|5|0|0|1|4|2|4|1|2|0|0|0|4|1|1|1|0|1|2|0|0|1|5|0|1|1|2|1|1|1|0|0|0|2|2|0|1|1|1|1|0|0|0|0|1|28</HistCounts>
+      </HistItem>
+    </Histograms>
+    <Metadata>
+      <MDI key="LAYER_TYPE">athematic</MDI>
+      <MDI key="STATISTICS_COVARIANCES">334.5454145786502</MDI>
+      <MDI key="STATISTICS_MAXIMUM">255</MDI>
+      <MDI key="STATISTICS_MEAN">41,058966100586</MDI>
+      <MDI key="STATISTICS_MEDIAN">2.4598013675253e-251</MDI>
+      <MDI key="STATISTICS_MINIMUM">1</MDI>
+      <MDI key="STATISTICS_MODE">1.1561521885872e-292</MDI>
+      <MDI key="STATISTICS_SKIPFACTORX">1</MDI>
+      <MDI key="STATISTICS_SKIPFACTORY">1</MDI>
+      <MDI key="STATISTICS_STDDEV">18,290582674662</MDI>
+    </Metadata>
+  </PAMRasterBand>
+  <PAMRasterBand band="4">
+    <Histograms>
+      <HistItem>
+        <HistMin>-0,5</HistMin>
+        <HistMax>255,5</HistMax>
+        <BucketCount>256</BucketCount>
+        <IncludeOutOfRange>1</IncludeOutOfRange>
+        <Approximate>0</Approximate>
+        <HistCounts>0|60|93|206|414|883|2007|3955|7750|52687|152925|163448|75488|33941|15012|8900|7540|7714|7163|7078|6776|6191|5742|5754|6219|6699|7697|9450|11974|16047|21395|28664|37784|49236|61561|75496|90085|105180|121819|137801|153465|169276|183462|193110|195893|191974|184554|175173|164359|155016|146499|138555|131281|123361|115892|109886|103108|95385|88517|81491|74977|68885|62130|56218|50440|45258|39758|35559|31317|27839|24585|21962|19765|17441|15810|14420|13171|11692|10999|10018|9235|8532|8027|7249|6739|6234|5936|5607|5163|4802|4549|4273|4006|3617|3517|3239|3127|2817|2707|2498|2272|2191|1952|1913|1751|1604|1495|1412|1310|1225|1144|1003|927|792|771|710|694|618|513|477|426|388|359|364|332|265|254|231|170|158|152|145|128|122|102|74|63|73|63|59|55|40|33|33|27|31|20|13|13|11|6|7|12|4|8|6|3|1|6|1|2|3|0|2|0|1|0|1|0|0|0|0|1|0|0|0|0|0|2|0|0|0|0|0|0|0|0|0|2|0|0|0|0|1|0|0|0|0|0|0|0|0|0|0|0|0|1|0|0|1|0|0|0|0|0|0|0|0|0|1|0|0|1|0|0|0|0|0|0|0|0|0|0|1|0|0|0|0|0|0|0|0|0|0|1|0|1|0|0|0|0|1|0|0|0|6</HistCounts>
+      </HistItem>
+    </Histograms>
+    <Metadata>
+      <MDI key="LAYER_TYPE">athematic</MDI>
+      <MDI key="STATISTICS_COVARIANCES">288.8356653610896</MDI>
+      <MDI key="STATISTICS_MAXIMUM">255</MDI>
+      <MDI key="STATISTICS_MEAN">45,496852409728</MDI>
+      <MDI key="STATISTICS_MEDIAN">4.2481423687336e-251</MDI>
+      <MDI key="STATISTICS_MINIMUM">1</MDI>
+      <MDI key="STATISTICS_MODE">1.1561521885872e-292</MDI>
+      <MDI key="STATISTICS_SKIPFACTORX">1</MDI>
+      <MDI key="STATISTICS_SKIPFACTORY">1</MDI>
+      <MDI key="STATISTICS_STDDEV">16,995165940969</MDI>
+    </Metadata>
+  </PAMRasterBand>
+  <PAMRasterBand band="5">
+    <Metadata>
+      <MDI key="LAYER_TYPE">athematic</MDI>
+      <MDI key="STATISTICS_MAXIMUM">255</MDI>
+      <MDI key="STATISTICS_MEAN">55.579354933393</MDI>
+      <MDI key="STATISTICS_MEDIAN">3.0729662549453e-266</MDI>
+      <MDI key="STATISTICS_MINIMUM">1</MDI>
+      <MDI key="STATISTICS_MODE">4.6593651715218e-282</MDI>
+      <MDI key="STATISTICS_STDDEV">27.875297902717</MDI>
+    </Metadata>
+  </PAMRasterBand>
+  <PAMRasterBand band="6">
+    <Histograms>
+      <HistItem>
+        <HistMin>-0,5</HistMin>
+        <HistMax>255,5</HistMax>
+        <BucketCount>256</BucketCount>
+        <IncludeOutOfRange>1</IncludeOutOfRange>
+        <Approximate>0</Approximate>
+        <HistCounts>0|554|355|629|1241|2542|5602|16446|44182|90912|122474|109489|74802|47533|36374|40466|54020|72182|91423|107011|120203|129912|135703|140420|143148|143036|143348|140920|137597|133783|129194|124281|120242|115670|110477|105406|100589|96052|90999|87608|83329|79468|75505|71950|68798|64990|62079|58653|56089|53132|50062|47632|44853|42366|39527|37790|34957|32793|30738|28946|27002|25140|23584|22037|20791|19487|18405|16886|15971|14899|14241|13189|12746|11893|11444|10929|10564|10129|9622|9211|9084|8739|8255|8161|8024|7638|7817|7672|7552|7617|7494|7500|7430|7413|7391|7393|7410|7312|7171|7097|7234|7043|7006|7042|6708|6607|6476|6208|6072|5883|5747|5439|5161|4787|4779|4346|4092|3860|3522|3276|2998|2739|2515|2310|2079|1808|1613|1376|1305|1139|1015|863|815|747|575|528|480|408|357|295|263|235|190|164|154|110|124|88|86|84|66|67|49|38|49|31|38|43|16|17|17|13|18|13|5|4|12|2|6|5|8|3|7|8|7|4|3|2|4|2|6|7|1|3|0|2|3|6|4|1|3|1|2|1|1|1|2|2|2|2|0|3|0|2|2|0|1|1|0|0|5|2|1|3|0|1|0|0|4|0|1|0|0|0|1|3|2|0|2|2|0|0|1|0|2|1|1|1|1|0|1|1|0|1|1|0|1|2|0|1|1|0|0|2|0|36</HistCounts>
+      </HistItem>
+    </Histograms>
+    <Metadata>
+      <MDI key="LAYER_TYPE">athematic</MDI>
+      <MDI key="STATISTICS_COVARIANCES">488.1599511718935</MDI>
+      <MDI key="STATISTICS_MAXIMUM">255</MDI>
+      <MDI key="STATISTICS_MEAN">36,559656067604</MDI>
+      <MDI key="STATISTICS_MEDIAN">1.1399107109543e-201</MDI>
+      <MDI key="STATISTICS_MINIMUM">1</MDI>
+      <MDI key="STATISTICS_MODE">1.7801025473311e-306</MDI>
+      <MDI key="STATISTICS_SKIPFACTORX">1</MDI>
+      <MDI key="STATISTICS_SKIPFACTORY">1</MDI>
+      <MDI key="STATISTICS_STDDEV">22,094342062435</MDI>
+    </Metadata>
+  </PAMRasterBand>
+</PAMDataset>

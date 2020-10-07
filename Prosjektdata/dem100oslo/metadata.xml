@@ -1,0 +1,3 @@
+<?xml version="1.0"?>
+<!--<!DOCTYPE metadata SYSTEM "http://www.esri.com/metadata/esriprof80.dtd">-->
+<metadata xml:lang="nb"><Esri><MetaID>{39E0EBCE-DAD9-439F-AFF8-F54D1117BDBB}</MetaID><CreaDate>20061030</CreaDate><CreaTime>18014200</CreaTime><SyncOnce>TRUE</SyncOnce><DataProperties><lineage><Process Name="ASCIIToRaster_4" ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Conversion Tools.tbx\ASCIIToRaster" Date="20061030" Time="180144">ASCIIToRaster K:\gggruppe-data\geomatikk\geg2240\dem100oslo.txt K:\gggruppe-data\geomatikk\geg2240\dem100oslo INTEGER</Process></lineage></DataProperties></Esri></metadata>

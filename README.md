@@ -1,1 +1,2 @@
-GEO4515 - Fjernanalyse
+# GEO4515
+Remote Sensing, UiO
