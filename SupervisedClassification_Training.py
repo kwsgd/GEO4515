@@ -2,10 +2,10 @@
 # http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
 
 
-###################################################
-# Program that generates training data, and 
-# use it to build a supervised ML model
-###################################################
+###########################################
+# Ish example of training / building model, 
+# not creating the "training data" we need 
+###########################################
 
 # from sklearn.ensemble import AdaBoostClassifier, ExtraTreesClassifier
 

@@ -41,6 +41,7 @@ def ColorComposition(bands, r=2, g=1, b=0):
 	"""
 	Plot true/false colour composite. True = [2, 1, 0] (r, g, b)
     The function plots the result
+    Hopefully get some Save=True input to automatiaclly save, if its possible?
 	"""
 	if r==2 and g == 1 and b==0:
 		print("'True' color composition")
