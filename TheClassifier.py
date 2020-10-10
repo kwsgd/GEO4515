@@ -10,8 +10,9 @@ import numpy      		 as np
 
 from sklearn.ensemble  import RandomForestClassifier, GradientBoostingClassifier
 from matplotlib.colors import ListedColormap
-from sklearn.externals import joblib
+#from sklearn.externals import joblib
 from rasterio.windows  import Window
+from sklearn.model_selection import train_test_split
 
 ############################################
 ## Foreløpige tanker om hva vi skal gjøre ##
@@ -23,7 +24,9 @@ from rasterio.windows  import Window
 # Maybe we have to install this to make it easier for ourselves... 
 
 # 2) https://developers.arcgis.com/python/api-reference/
-# 3) https://pro.arcgis.com
+# 3) https://pro.arcgis.com/en/pro-app/help/main/welcome-to-the-arcgis-pro-app-help.htm
+# 4) https://pro.arcgis.com/en/pro-app/arcpy/main/arcgis-pro-arcpy-reference.htm
+
 
 
 # ==================
@@ -180,11 +183,198 @@ from rasterio.windows  import Window
 ####################################################################################################
 
 # https://spectraldifferences.wordpress.com/2014/09/07/object-based-classification-using-random-forests/
-# https://pro.arcgis.com/en/pro-app/help/main/welcome-to-the-arcgis-pro-app-help.htm#ESRI_SECTION1_777CD8A6DFB247FB8E5E3546A5DC2F2A
 
 # https://github.com/perrygeo/pyimpute
 # https://developers.arcgis.com/python/api-reference/arcgis.raster.analytics.html?highlight=classify#arcgis.raster.analytics.classify
 # https://pro.arcgis.com/en/pro-app/help/main/welcome-to-the-arcgis-pro-app-help.htm
+# https://developers.arcgis.com/python/guide/install-and-set-up/
+# https://developers.arcgis.com/python/sample-notebooks/
 
-# Creating "training data":
+# maybe useful when we have created polygons:
+# https://rasterio.readthedocs.io/en/latest/topics/masking-by-shapefile.html
 
+# Maybe installing ArcGIS API for Python
+
+# Random Forest works best with a large training data set to train the forest 
+# So if we create our own "training data", our train set may be too small 
+# for the forest to work good enough, we should keep this in mind when getting results
+# Maybe another model would then be better, or using a geoprocessing tool to  create "training data"
+
+# number of bands are kinda like the 'features'
+
+####################################################################################################
+####################################################################################################
+
+# Creating "training data"
+# ------------------------
+# Using the forest classes
+
+'''
+# We have to normaize the data?
+xTrain = xTrain / 255.0
+xTest = xTest / 255.0
+'''
+
+'''
+# Renaming the targets to 0 and 1 instead of Confirmed/False Positives
+target[target == 'CONFIRMED']      = 1
+target[target == 'FALSE POSITIVE'] = 0
+'''
+
+# next idea -> use only rgb bands 
+# use group/segmentation to create to split up
+# assign some true value....
+
+####################################################################################################
+####################################################################################################
+
+# Not exactly as the exercise, but using the cropped image with 
+# forest index classification, use this as the 'training data' with 'true prediction'
+# then trying the model on the whole uncropped picture 
+# er vel ndvi og class 
+
+# Opening the original .tif file 
+original_file = rio.open('Prosjektdata/1993_tm_oslo.tif')
+
+# The metadata of the original file 
+meta_data = original_file.meta
+
+#print(meta_data)
+#{'driver': 'GTiff', 'dtype': 'uint8', 'nodata': None, 'width': 2245, 'height': 2246,'count': 6,
+#'crs': CRS.from_dict(init='epsg:32632'), 'transform': Affine(28.5, 0.0, 554011.5,0.0, -28.5, 6691999.5)}
+
+# Reading and cropping to create our input raster: shape (6, 1000, 700)
+input_raster = original_file.read(window=Window(70, 850, 700, 1000))  #.astype(float)
+
+
+# We need to change the dimensions 
+# features : (n_samples, n_features)
+# labels   : (n_samples,)
+
+
+ndvi = es.normalized_diff(input_raster[4], input_raster[3])
+
+#np.where(np.isnan(X))
+ndvi = np.nan_to_num(ndvi) 
+
+# Creating classes
+ndvi_class_bins    = [-np.inf, 0, 0.25, 0.5, 0.75, np.inf]
+ndvi_landsat_class = np.digitize(ndvi, ndvi_class_bins)
+
+# Apply the nodata mask to the newly classified NDVI data
+ndvi_landsat_class = np.ma.masked_where(np.ma.getmask(ndvi), ndvi_landsat_class)
+np.unique(ndvi_landsat_class)
+#print(ndvi_landsat_class.shape) (1000, 700)
+
+
+# Define color map
+nbr_colors = ["gray", "y", "yellowgreen", "g", "darkgreen"]
+nbr_cmap = ListedColormap(nbr_colors)
+
+# Define class names
+ndvi_cat_names = [
+    "No Vegetation",
+    "Bare Area",
+    "Low Vegetation",
+    "Moderate Vegetation",
+    "High Vegetation",
+]
+
+# Get list of classes
+classes = np.unique(ndvi_landsat_class)
+classes = classes.tolist()
+classes.insert(0,1)
+classes = classes[0:5]
+print(classes, 'classes')
+
+#ep.plot_bands(input_raster[4])
+
+
+#features = np.concatenate(input_raster[4], axis=0).reshape(-1,1)
+targets  = np.concatenate(ndvi_landsat_class)
+features = np.concatenate(ndvi).reshape(-1,1)
+
+print(features.shape)
+print(targets.shape)
+
+X_train, X_test, y_train, y_test = train_test_split(features, targets, test_size=0.33, random_state=42)
+
+
+# build your Random Forest Classifier 
+rf = RandomForestClassifier(class_weight=None,
+							n_estimators=100,
+							criterion='gini',
+							max_depth=4, 
+							min_samples_split=2,
+							min_samples_leaf=1,
+							max_features='auto',
+							bootstrap=True,
+							oob_score=True,
+							n_jobs=1,
+							random_state=None,
+							verbose=True)
+
+
+
+
+# now fit your training data with the original dataset, må bruke org bilde pga reshape
+print(features)
+print(targets)
+rf.fit(features,targets)
+
+
+# test data as the uncropped ndvi
+test_data = original_file.read()
+ndvi_test = es.normalized_diff(test_data[4], test_data[3]) #np.where(np.isnan(X))
+ndvi_test = np.nan_to_num(ndvi_test) 
+test_image = np.concatenate(ndvi_test).reshape(-1,1)
+
+#test_image = np.concatenate(original_file.read(4)).reshape(-1,1)
+print(test_image.shape)                                 # (2246, 2245) - >  (5042270,1)
+#print(np.ravel(test_image))
+
+prediction = rf.predict(test_image)
+
+prediction = np.ravel(prediction)
+print(prediction.shape)
+
+bilde = prediction.reshape(2246, 2245)
+print(bilde.shape, 'bi')
+
+#ep.plot_bands(bilde)
+#plt.show()
+
+# Define color map
+nbr_colors = ["gray", "y", "yellowgreen", "g", "darkgreen"]
+nbr_cmap = ListedColormap(nbr_colors)
+
+# Plot your data
+fig, ax = plt.subplots()
+im      = ax.imshow(bilde)
+
+ep.draw_legend(im_ax=im, classes=classes, titles=ndvi_cat_names)
+ax.set_title("hmmmm",fontsize=14)
+ax.set_axis_off()
+
+# Auto adjust subplot to fit figure size
+plt.tight_layout()
+plt.show()
+
+
+
+
+
+
+
+'''
+#print(input_raster.swapaxes(0,2).shape)
+#print(np.concatenate(input_raster[0], axis=0).shape)
+
+#n_samples = np.concatenate(input_raster[0], axis=0)
+#print(len(n_samples))
+
+features = input_raster.swapaxes(0,2)
+features = features.swapaxes(0,1)
+features = np.concatenate((input_raster[0], input_raster[0]), axis=0)
+print(features.shape)
+'''
