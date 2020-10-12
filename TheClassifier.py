@@ -18,6 +18,8 @@ from sklearn.model_selection import train_test_split
 ## Foreløpige tanker om hva vi skal gjøre ##
 ############################################
 
+# Sentinel har bedre oppløsning, kanskje bedre for classification
+
 
 # 1) https://learn.arcgis.com/en/projects/predict-seagrass-habitats-with-machine-learning/#create-a-training-dataset
 # ArcGIS Pro includes a default conda environment; arcgispro-py3.
