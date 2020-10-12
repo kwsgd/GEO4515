@@ -23,7 +23,7 @@ from rasterio.windows 	 import Window  # Bruke denne til å croppe!! window=Wind
 n 	  = 6 	# 6 bands
 bands = func.GetDataAndBands(n, crop=True, x1=70, x2=850, y1=700, y2=1000, file='Prosjektdata/1993_tm_oslo.tif')
 #bands = func.GetDataAndBands(n, file='Prosjektdata/1993_tm_oslo.tif')
-
+print(bands)
 
 #all_bands = np.dstack((band1,band2,band3,band4,band5,band7)).swapaxes(2,0)
 #all_bands = np.stack([band1,band2,band3,band4,band5,band7])

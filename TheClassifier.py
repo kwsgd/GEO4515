@@ -244,7 +244,9 @@ meta_data = original_file.meta
 #'crs': CRS.from_dict(init='epsg:32632'), 'transform': Affine(28.5, 0.0, 554011.5,0.0, -28.5, 6691999.5)}
 
 # Reading and cropping to create our input raster: shape (6, 1000, 700)
-input_raster = original_file.read(window=Window(70, 850, 700, 1000))  #.astype(float)
+#input_raster = original_file.read(window=Window(500, 1000, 700, 1000)).astype(float)
+input_raster = original_file.read(window=Window(70, 850, 700, 1000)).astype(float)
+#ep.plot_bands(input_raster)
 
 
 # We need to change the dimensions 
@@ -252,10 +254,12 @@ input_raster = original_file.read(window=Window(70, 850, 700, 1000))  #.astype(f
 # labels   : (n_samples,)
 
 
-ndvi = es.normalized_diff(input_raster[4], input_raster[3])
+ndvi = es.normalized_diff(input_raster[3], input_raster[2])
+#ndvi = (input_raster[4]-input_raster[3])/(input_raster[4]+input_raster[3])
+ep.plot_bands(ndvi, cmap="RdYlGn", cols=1, vmin=-1, vmax=1)
 
 #np.where(np.isnan(X))
-ndvi = np.nan_to_num(ndvi) 
+#ndvi = np.nan_to_num(ndvi) 
 
 # Creating classes
 ndvi_class_bins    = [-np.inf, 0, 0.25, 0.5, 0.75, np.inf]
@@ -283,23 +287,25 @@ ndvi_cat_names = [
 # Get list of classes
 classes = np.unique(ndvi_landsat_class)
 classes = classes.tolist()
-classes.insert(0,1)
-classes = classes[0:5]
+#classes.insert(0,1)
+#classes = classes[0:5]
 print(classes, 'classes')
 
 #ep.plot_bands(input_raster[4])
 
 
 #features = np.concatenate(input_raster[4], axis=0).reshape(-1,1)
-targets  = np.concatenate(ndvi_landsat_class)
 features = np.concatenate(ndvi).reshape(-1,1)
+targets  = np.concatenate(ndvi_landsat_class)
+
+print(ndvi_landsat_class, 'he')
 
 print(features.shape)
 print(targets.shape)
 
 X_train, X_test, y_train, y_test = train_test_split(features, targets, test_size=0.33, random_state=42)
 
-
+"""
 # build your Random Forest Classifier 
 rf = RandomForestClassifier(class_weight=None,
 							n_estimators=100,
@@ -313,7 +319,18 @@ rf = RandomForestClassifier(class_weight=None,
 							n_jobs=1,
 							random_state=None,
 							verbose=True)
+"""
 
+
+rf = GradientBoostingClassifier(n_estimators = 300,
+								min_samples_leaf = 1,
+								min_samples_split = 4,
+								max_depth = 4,
+								max_features = 'auto',
+								learning_rate = 0.8,
+								subsample = 1,
+								random_state = None,
+								warm_start = True)
 
 
 
@@ -350,7 +367,7 @@ nbr_cmap = ListedColormap(nbr_colors)
 
 # Plot your data
 fig, ax = plt.subplots()
-im      = ax.imshow(bilde)
+im      = ax.imshow(bilde, cmap=nbr_cmap)
 
 ep.draw_legend(im_ax=im, classes=classes, titles=ndvi_cat_names)
 ax.set_title("hmmmm",fontsize=14)

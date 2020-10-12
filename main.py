@@ -14,6 +14,16 @@ import earthpy.spatial   as es
 import earthpy.plot      as ep
 # -----------------------------------------------------------------------------
 
+# Spørsmål til oppgavene:
+# 1) Holder det med vann og skog på spectral signatures?
+# 2) Noe spesielt vi skal prøve å få frem på false color?
+# 3) Hva er det rød på NDVI?
+# 4) Kan det programmet (Focus) eksportere training data?
+# 5) Change detection: skal vi ha plot for alle bandsa?
+
+# NDWI: how to map water bodies? 
+# - NDWI uses green and near infrared bands to highlight water bodies
+
 # Ikke satt opp ennaa
 
 # Setting up directory paths, good idea or not?
@@ -34,32 +44,6 @@ CodesDir  = 'Codes/'        # alle python scrips inn her etterhvert kanskje?
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# overtrøtt leking med generelle paths for en meningsløsfunksjon xD
-# men tenkte noen genrelle paths, og filename som input argumenter i funksjoner osv
-# meeen må nesten se an om/hvis det blir fornuftig/oversiktlig etterhvert eller ikke xD
-# feel absolutt feel free to edit, det jeg har skrevet 
-# bare å flytte langt ned om du skal jobbe med noe her altså xD
 
 '''
 random example function in function.py
