@@ -1,4 +1,4 @@
-import os, sys, gdal 
+import os, sys, gdal
 
 from matplotlib.colors 	 import ListedColormap
 from glob			   	 import glob
@@ -10,7 +10,7 @@ import earthpy           as et
 import earthpy.spatial   as es
 import earthpy.plot      as ep
 import rasterio          as rio
-from rasterio.windows 	 import Window 
+from rasterio.windows 	 import Window
 
 
 
@@ -53,7 +53,7 @@ from sklearn.model_selection import train_test_split
 rf = RandomForestClassifier(class_weight=None,
 							n_estimators=100,
 							criterion='gini',
-							max_depth=4, 
+							max_depth=4,
 							min_samples_split=2,
 							min_samples_leaf=1,
 							max_features='auto',
@@ -64,5 +64,4 @@ rf = RandomForestClassifier(class_weight=None,
 							verbose=True)
 
 rf.fit(X_train, y_train)
-
-prediction = rf.predict(test_image)
+prediction = rf.predict(X_test)
