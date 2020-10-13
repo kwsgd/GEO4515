@@ -22,7 +22,7 @@ bands_2000 = rio.open('Prosjektdata/2000_etm_oslo.tif').read().astype(float)
 # NDI(CHANGE) = (AFTER-BEFORE) / (AFTER+BEFORE)
 # =============================================
 
-'''
+
 titles = ['Blue','Green','Red','Near-Infrared','Short-wave Infrared','Short-wave Infrared']
 
 NDI_change = (bands_2000-bands_1993)/(bands_2000+bands_1993)
@@ -37,7 +37,9 @@ NDVI_before = es.normalized_diff(bands_1993[3], bands_1993[2])
 NDVI_after  = es.normalized_diff(bands_2000[3], bands_2000[2])
 NDI_of_NDVI = (NDVI_after-NDVI_before)/(NDVI_after+NDVI_before)
 
-ep.plot_bands(NDI_of_NDVI, cmap="RdYlGn", cols=2, title='NDI of NDVI', vmin=-1, vmax=1)
+ep.plot_bands(NDVI_before, cmap="RdYlGn",  cols=1, title='NDVI 1993', vmin=-1, vmax=1)
+ep.plot_bands(NDVI_after,  cmap="RdYlGn",  cols=1, title='NDVI 2000', vmin=-1, vmax=1)
+ep.plot_bands(NDI_of_NDVI, cmap="RdYlGn_r", cols=1, title='NDI of NDVI', vmin=-1, vmax=1)
 
 # =============================
 # DIFFERENCE = (AFTER - BEFORE)
@@ -120,7 +122,7 @@ ep.plot_bands(RedRatio, cmap="seismic", title='Red ratio [1993 - 2000]')
 #DiffBands = np.stack([DiffBlue, DiffGreen, DiffRed])
 #ep.plot_rgb(DiffBands, rgb=[2,1,0], title="RGB Difference", stretch=True)
 
-'''
+
 # False Color: NIR, rød, grønn
 # Plantene sin helse
 #ep.plot_rgb(bands_2000, rgb=[3,2,1], title="False Color (NIR, red, green) in 2000", stretch=True)
