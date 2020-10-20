@@ -73,7 +73,7 @@ def ExampleFunc(bands, r=3, g=2, b=1, infolder=None, getfile=None, outfolder=Non
 # in main.py:
 import function.py as F
 # example for running task1 
-outfile = 'experimentplot'     [%g]_g[%g]_b[%g].png' %(r, g, b) # husker helt med % på string xD
+outfile = 'experimentplot'     [%g]_g[%g]_b[%g].png' %(r, g, b)
 ExampleFunc(r=3, g=2, b=1,
 			infolder=Datadir,
 			getfile='1993_tm_oslo.tif')

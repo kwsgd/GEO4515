@@ -72,7 +72,7 @@ ep.plot_bands(ndvi, cmap="RdYlGn", cols=1, title=titles, vmin=-1, vmax=1)
 ndvi_class_bins    = [-np.inf, 0, 0.25, 0.5, 0.75, np.inf]
 ndvi_landsat_class = np.digitize(ndvi, ndvi_class_bins)
 
-# Apply the nodata mask to the newly classified NDVI data
+# Apply the nodata mask to the newly classified NDVI data, dont need this?
 ndvi_landsat_class = np.ma.masked_where(np.ma.getmask(ndvi), ndvi_landsat_class)
 np.unique(ndvi_landsat_class)
 
