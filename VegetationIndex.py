@@ -21,7 +21,17 @@ from rasterio.windows 	 import Window  # Bruke denne til å croppe!! window=Wind
 # -----------------------------------------------------------------------------
 
 n 	  = 6 	# 6 bands
-bands = func.GetDataAndBands(n, crop=True, x1=70, x2=850, y1=700, y2=1000, file='Prosjektdata/1993_tm_oslo.tif')
+
+yr = input("Enter year (YYYY): ")
+
+if yr == '1993':
+    file = 'Prosjektdata/1993_tm_oslo.tif'
+elif yr == '2000':
+    file = 'Prosjektdata/2000_etm_oslo.tif'
+else:
+    print("Input: 1993 or 2000")
+
+bands = func.GetDataAndBands(n, crop=True, x1=70, x2=850, y1=700, y2=1000, file=file)
 #bands = func.GetDataAndBands(n, file='Prosjektdata/1993_tm_oslo.tif')
 print(bands)
 
@@ -55,7 +65,7 @@ print(np.max(ndvi))
 # You can plot NDVI with a colorbar legend of continuous values using the
 # ``plot_bands`` function from the ``earthpy.plot`` module.
 
-titles = ["Normalized Difference Vegetation Index (NDVI)"]
+titles = ["Normalized Difference Vegetation Index (NDVI) Year: %s" %yr]
 
 # Turn off bytescale scaling due to float values for NDVI
 ep.plot_bands(ndvi, cmap="RdYlGn", cols=1, title=titles, vmin=-1, vmax=1)
@@ -111,7 +121,7 @@ fig, ax = plt.subplots(figsize=(8, 8))
 im      = ax.imshow(ndvi_landsat_class, cmap=nbr_cmap)
 
 ep.draw_legend(im_ax=im, classes=classes, titles=ndvi_cat_names)
-ax.set_title("Normalized Difference Vegetation Index (NDVI) Classes",fontsize=14)
+ax.set_title("Normalized Difference Vegetation Index (NDVI) Classes. Year: %s" %yr,fontsize=14)
 ax.set_axis_off()
 
 # Auto adjust subplot to fit figure size
