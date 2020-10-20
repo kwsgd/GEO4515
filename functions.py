@@ -37,19 +37,19 @@ def GetDataAndBands(n, crop=False, x1=100, x2=200, y1=100, y2=200, file=''):
 
     return band
 
-def ColorComposition(bands, r=2, g=1, b=0):
-	"""
-	Plot true/false colour composite. True = [2, 1, 0] (r, g, b)
-    The function plots the result
-    Hopefully get some Save=True input to automatiaclly save, if its possible?
-	"""
-	if r==2 and g == 1 and b==0:
-		print("'True' color composition")
-		ep.plot_rgb(bands, rgb=[r,g,b], title="RGB image (True)", stretch=True)
+def ColorComposition(bands, yr='', r=2, g=1, b=0):
+    """
+    Plot true/false colour composite. True = [2, 1, 0] (r, g, b)
+    The function plots the result, but does not automatically save the image!
+    """
 
-	else:
-		print("False color composition")
-		ep.plot_rgb(bands, rgb=[r,g,b], title="RGB image (False)", stretch=True)
+    if r==2 and g == 1 and b==0:
+        print("'True' color composition. %s" %yr)
+        ep.plot_rgb(bands, rgb=[r,g,b], title="RGB image (True). Year: %s" %yr, stretch=True)
+
+    else:
+        print("False color composition %s" %yr)
+        ep.plot_rgb(bands, rgb=[r,g,b], title="RGB image (False). Year: %s" %yr, stretch=True)
 
 def CropImg(img, x1, x2, y1, y2): # Usikker om de ble riktig vei...
     """

@@ -16,40 +16,59 @@ import earthpy.plot      as ep
 import functions		 as func
 # -----------------------------------------------------------------------------
 
-n 	  = 6 	# 6 bands
-bands = func.GetDataAndBands(n, file='Prosjektdata/2000_etm_oslo.tif')
+n_bands = 6
+
+### True/False color composites
+# -----------------------------------------------------------------------------
+
+yr = input("Enter year (YYYY): ")
+print("Year: %s" %yr)
+
+if yr == '1993':
+    file = 'Prosjektdata/1993_tm_oslo.tif'
+elif yr == '2000':
+    file = 'Prosjektdata/2000_etm_oslo.tif'
+else:
+    print("Input: 1993 or 2000")
+
+bands = func.GetDataAndBands(n=n_bands, crop=False, x1=70, x2=850, y1=700, y2=1000, file=file)
 
 # All bands in a stack. Band 1, 2, 3, 4, 5 and 7
 all_bands = np.stack([bands[0],bands[1],bands[2],bands[3],bands[4],bands[5]])
 #print(all_bands.shape)	# (6, 2246, 2245)
 
-# Plot all bands
-#ep.plot_bands(all_bands)
-
 # Make true/false colour composite.
-func.ColorComposition(bands=all_bands)
-func.ColorComposition(bands=all_bands, r=5, g=2, b=1)
+func.ColorComposition(bands=all_bands, yr=yr)
+func.ColorComposition(bands=all_bands, yr=yr, r=5, g=2, b=1)
 
-#skog  = band_crop[680:710, 310:360]
-#water_crop = plt.imshow(water)
-#skog_crop = plt.imshow(skog)
+# Er denne vi skal bruke..?
+func.ColorComposition(bands=all_bands, yr=yr, r=3, g=2, b=1)
+
+
+
+### Spectral signatures
+# -----------------------------------------------------------------------------
 
 # Empty lists for cropped images
 band_crop 	= []
 water		= []
 forest 		= []
 
+#skog       = band_crop[680:710, 310:360]
+#water_crop = plt.imshow(water)
+#skog_crop  = plt.imshow(skog)
 
 # Cropp original image
-for i in range(n):
+
+for i in range(n_bands):
 	band_crop.append(func.CropImg(img=bands[i], x1=0, x2=700, y1=850, y2=1800))
 
 # Crop out an water area
-for i in range(n):
+for i in range(n_bands):
 	water.append(np.mean(func.CropImg(img=band_crop[i], x1=210, x2=260, y1=415, y2=440)))
 
 # Crop out an forest area
-for i in range(n):
+for i in range(n_bands):
 	forest.append(np.mean(func.CropImg(img=band_crop[i], x1=310, x2=360, y1=685, y2=710)))
 
 print(water)
@@ -62,8 +81,10 @@ band_list = ['Band 1','Band 2','Band 3','Band 4','Band 5','Band 7']
 plt.plot(band_list, water, label='Water')
 plt.plot(band_list, forest, label='Forest')
 plt.legend()
-plt.savefig("band_list.png") # Maa sikkert endre navn
+plt.savefig("band_list_%s.png" %yr) # Maa sikkert endre navn
 plt.show()
+
+
 
 
 
