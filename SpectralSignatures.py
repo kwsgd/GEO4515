@@ -35,11 +35,11 @@ all_bands = np.stack([bands[0],bands[1],bands[2],bands[3],bands[4],bands[5]])
 
 ### True/False color composites
 # -----------------------------------------------------------------------------
-
+'''
 func.ColorComposition(bands=all_bands, yr=yr)
 func.ColorComposition(bands=all_bands, yr=yr, r=5, g=2, b=1)
 func.ColorComposition(bands=all_bands, yr=yr, r=3, g=2, b=1) # Veg. health?
-
+'''
 
 ### Spectral signatures
 # -----------------------------------------------------------------------------
@@ -70,10 +70,10 @@ band_list = ['Band 1','Band 2','Band 3','Band 4','Band 5','Band 7']
 
 plt.plot(band_list, water, label='Water')
 plt.plot(band_list, forest, label='Forest')
-plt.title("Spectral signatures. Year: %s" %yr)
-plt.xlabel("Wavelength"); plt.ylabel("DN")
-plt.savefig("Results/band_list_%s.png" %yr) # Maa sikkert endre navn
-plt.legend(); plt.show()
+plt.title("Spectral signatures. Year: %s" %yr, fontsize=15)
+plt.xlabel("Wavelength", fontsize=15); plt.ylabel("DN", fontsize=15)
+plt.legend(fontsize=15)
+plt.savefig("Results/band_list_%s.png" %yr); plt.show()
 
 
 
