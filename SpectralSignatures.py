@@ -17,7 +17,7 @@ import functions		 as func
 # -----------------------------------------------------------------------------
 
 n 	  = 6 	# 6 bands
-bands = func.GetDataAndBands(n, file='Prosjektdata/2000_etm_oslo.tif')
+bands = func.GetDataAndBands(n, crop=False, x1=0, x2=700, y1=850, y2=1800, file='Prosjektdata/2000_etm_oslo.tif')
 
 # All bands in a stack. Band 1, 2, 3, 4, 5 and 7
 all_bands = np.stack([bands[0],bands[1],bands[2],bands[3],bands[4],bands[5]])
@@ -30,6 +30,9 @@ all_bands = np.stack([bands[0],bands[1],bands[2],bands[3],bands[4],bands[5]])
 func.ColorComposition(bands=all_bands)
 func.ColorComposition(bands=all_bands, r=5, g=2, b=1)
 
+# Er denne vi skal bruke..?
+func.ColorComposition(bands=all_bands, r=3, g=2, b=1)
+
 #skog  = band_crop[680:710, 310:360]
 #water_crop = plt.imshow(water)
 #skog_crop = plt.imshow(skog)
@@ -41,6 +44,7 @@ forest 		= []
 
 
 # Cropp original image
+
 for i in range(n):
 	band_crop.append(func.CropImg(img=bands[i], x1=0, x2=700, y1=850, y2=1800))
 
