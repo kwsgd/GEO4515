@@ -45,11 +45,11 @@ def ColorComposition(bands, yr='', r=2, g=1, b=0):
 
     if r==2 and g == 1 and b==0:
         print("'True' color composition. %s" %yr)
-        ep.plot_rgb(bands, rgb=[r,g,b], title="RGB image (True). Year: %s" %yr, stretch=True)
+        ep.plot_rgb(bands, rgb=[r,g,b], figsize=(7,7), title="RGB image (True). Year: %s" %yr, stretch=True)
 
     else:
         print("False color composition %s" %yr)
-        ep.plot_rgb(bands, rgb=[r,g,b], title="RGB image (False). Year: %s" %yr, stretch=True)
+        ep.plot_rgb(bands, rgb=[r,g,b], figsize=(7,7), title="RGB image (False). R=%s, G=%s, B=%s (Python index). Year: %s" %(r, g, b, yr), stretch=True)
 
 def CropImg(img, x1, x2, y1, y2): # Usikker om de ble riktig vei...
     """
