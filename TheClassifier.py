@@ -307,7 +307,7 @@ print(targets.shape)
 
 X_train, X_test, y_train, y_test = train_test_split(features, targets, test_size=0.33, random_state=42)
 
-
+'''
 # build your Random Forest Classifier 
 rf = RandomForestClassifier(class_weight=None,
 							n_estimators=100,
@@ -321,7 +321,7 @@ rf = RandomForestClassifier(class_weight=None,
 							n_jobs=1,
 							random_state=None,
 							verbose=True)
-
+'''
 
 
 rf = GradientBoostingClassifier(n_estimators = 300,
