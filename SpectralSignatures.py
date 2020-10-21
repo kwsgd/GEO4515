@@ -18,11 +18,7 @@ import functions		 as func
 
 n_bands = 6
 
-### True/False color composites
-# -----------------------------------------------------------------------------
-
 yr = input("Enter year (YYYY): ")
-print("Year: %s" %yr)
 
 if yr == '1993':
     file = 'Prosjektdata/1993_tm_oslo.tif'
@@ -37,14 +33,13 @@ bands = func.GetDataAndBands(n=n_bands, crop=False, x1=70, x2=850, y1=700, y2=10
 all_bands = np.stack([bands[0],bands[1],bands[2],bands[3],bands[4],bands[5]])
 #print(all_bands.shape)	# (6, 2246, 2245)
 
-# Make true/false colour composite.
+### True/False color composites
+# -----------------------------------------------------------------------------
+'''
 func.ColorComposition(bands=all_bands, yr=yr)
 func.ColorComposition(bands=all_bands, yr=yr, r=5, g=2, b=1)
-
-# Er denne vi skal bruke..?
-func.ColorComposition(bands=all_bands, yr=yr, r=3, g=2, b=1)
-
-
+func.ColorComposition(bands=all_bands, yr=yr, r=3, g=2, b=1) # Veg. health?
+'''
 
 ### Spectral signatures
 # -----------------------------------------------------------------------------
@@ -53,10 +48,6 @@ func.ColorComposition(bands=all_bands, yr=yr, r=3, g=2, b=1)
 band_crop 	= []
 water		= []
 forest 		= []
-
-#skog       = band_crop[680:710, 310:360]
-#water_crop = plt.imshow(water)
-#skog_crop  = plt.imshow(skog)
 
 # Cropp original image
 
@@ -71,18 +62,19 @@ for i in range(n_bands):
 for i in range(n_bands):
 	forest.append(np.mean(func.CropImg(img=band_crop[i], x1=310, x2=360, y1=685, y2=710)))
 
-print(water)
-print(forest)
+#print(band_crop)
+#print(water)
+#print(forest)
 
 band_list = ['Band 1','Band 2','Band 3','Band 4','Band 5','Band 7']
 
-# Staar egentlig scatter plot..???
-
 plt.plot(band_list, water, label='Water')
 plt.plot(band_list, forest, label='Forest')
-plt.legend()
-plt.savefig("band_list_%s.png" %yr) # Maa sikkert endre navn
-plt.show()
+plt.title("Spectral signatures. Year: %s" %yr, fontsize=15)
+plt.xlabel("Wavelength", fontsize=15); plt.ylabel("DN", fontsize=15)
+plt.legend(fontsize=15)
+plt.savefig("Results/band_list_%s.png" %yr); plt.show()
+
 
 
 
