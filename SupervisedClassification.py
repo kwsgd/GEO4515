@@ -29,7 +29,7 @@ height = meta_data['height']
 input_raster = original_file.read().astype(float)
 
 
-landcover_data  = gpd.read_file('Truth_Data.shp')
+landcover_data  = gpd.read_file('Truth_Data.shp'); print(landcover_data)
 pixels_data     = gpd.read_file('New_shapefile.shp')
 
 pixels_data.insert(0, column='landcovers', value=landcover_data['landcovers'].values)
@@ -46,8 +46,8 @@ class_ids = np.arange(classes.size)+1; #print(class_ids)
 Truth_Data['id'] = Truth_Data['landcovers'].map(dict(zip(classes, class_ids)))
 
 # Printing the final DataFrame 
-print(Truth_Data)
-
+print(Truth_Data.loc[130,:])
+sys.exit()
 
 # Inputs/features is the 6 landsat bands, and target is the class id:
 features = Truth_Data.loc[:, (Truth_Data.columns != 'landcovers') & \
@@ -93,7 +93,7 @@ nbr_colors = ['blue', 'grey', 'darkgreen']
 nbr_cmap   = ListedColormap(nbr_colors)
 
 # Define class names
-cat_names = ['water','urban/agriculture','darkgreen']
+cat_names = ['water','urban/agriculture','forest']
 
 classes_ids = class_ids.tolist()
 
