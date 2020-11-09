@@ -206,7 +206,7 @@ def NDVI(bands, year):
 	im      = ax.imshow(ndvi_landsat_class, cmap=nbr_cmap)
 
 	ep.draw_legend(im_ax=im, classes=classes, titles=ndvi_cat_names)
-	ax.set_title('Normalized Difference Vegetation Index (NDVI) Classes. Year: %s' %yr,fontsize=14)
+	ax.set_title('Normalized Difference Vegetation Index (NDVI) Classes. \nYear: %s' %yr,fontsize=14)
 	ax.set_axis_off(); plt.tight_layout()
 	plt.show()
 
