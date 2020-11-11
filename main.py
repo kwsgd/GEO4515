@@ -16,7 +16,7 @@ import earthpy.spatial   as es
 import earthpy.plot      as ep
 # -----------------------------------------------------------------------------
 
-def GetDataAndBands(file, x1, y1, x2, y2, n, crop=False):
+def GetDataAndBands_2(file, x1, y1, x2, y2, n, crop=False):
     """Create array with the pixel values for each band
 
 	file : the entire .tif-image
@@ -45,7 +45,9 @@ def GetDataAndBands(file, x1, y1, x2, y2, n, crop=False):
 
     return band
 
-''' FIKK IKKE TIL DENNE MED -SS, MEN DEN SER BEDRE UT....
+
+#FIKK IKKE TIL DENNE MED -SS, MEN DEN SER BEDRE UT....
+#Hmm, tror det funker nå hvertfall..?
 def GetDataAndBands(file, x1=70, x2=700, y1=850, y2=1000, crop=False):
 	"""Create array with the pixel values for each band
 
@@ -60,7 +62,7 @@ def GetDataAndBands(file, x1=70, x2=700, y1=850, y2=1000, crop=False):
 			-- height  (y2) : the desired height/length of window/arr in y-direction
 
 	if crop :
-		returned array has shape (n_bands, y2, x2),
+		returned array has shape (n_bands, y2, x2)
 	"""
 
 	# Opening the original file:
@@ -75,7 +77,6 @@ def GetDataAndBands(file, x1=70, x2=700, y1=850, y2=1000, crop=False):
 	original_file.close()
 
 	return raster_arr
-'''
 
 def ColorComposition(bands, yr='', r=2, g=1, b=0):
 	"""Plot true/false colour composite.
@@ -85,14 +86,16 @@ def ColorComposition(bands, yr='', r=2, g=1, b=0):
 	"""
 
 	if r==2 and g == 1 and b==0:
-		ep.plot_rgb(bands, rgb=[r,g,b], figsize=(7,7), title="RGB image (True). R=%s, G=%s, B=%s. Year: %s" %(r+1, g+1, b+1, yr), stretch=True)
+		ep.plot_rgb(bands, rgb=[r,g,b],figsize=(7,7),\
+			title="RGB image (True). R=%s, G=%s, B=%s. Year: %s" %(r+1, g+1, b+1, yr), stretch=True)
 
 	else:
-		ep.plot_rgb(bands, rgb=[r,g,b], figsize=(7,7), title="RGB image (False). R=%s, G=%s, B=%s. Year: %s" %(r+1, g+1, b+1, yr), stretch=True)
+		ep.plot_rgb(bands, rgb=[r,g,b], figsize=(7,7),\
+			title="RGB image (False). R=%s, G=%s, B=%s. Year: %s" %(r+1, g+1, b+1, yr), stretch=True)
 
 
 def CropImg(img, x1, x2, y1, y2):
-	"""Function thats crops and image and returns it"""
+	"""Function thats crops an image and returns it"""
 
 	crop = img[int(y1):int(y2), int(x1):int(x2)]
 
@@ -130,6 +133,7 @@ def Forest(y1, samples, n, bands):
 
 def mean(n, samples, bands):
     """ Returns mean and std """
+
     mean = []; std  = []
 
     for i in range(n):
@@ -293,23 +297,34 @@ def ChangeDetection(bands_1993, bands_2000, band_name='SWIR', ndi_of_ndvi=False)
 		NDI_of_NDVI(ndvi_after, ndvi_before, title='NDI of NDVI', cmap='RdYlGn_r')
 
 
-def SupervisedClassification(raster_arr, width, height):
-	"""Supervised Classification of Image"""
+def SupervisedClassification(raster_arr, width, height, year=1993):
+	"""Pixel-based Supervised Classification of Image"""
 
-	landcover_data  = gpd.read_file('Truth_Data.shp')     # dataframe containing class names
-	pixels_data     = gpd.read_file('New_shapefile.shp')  # dataframe containing pixel values
+	if year == 1993:
+		path_class = 'shapefiles_1993/Truth_Data.shp'     # shapefile of class names
+		path_pix   = 'shapefiles_1993/New_shapefile.shp'  # shapefile of pixel values
+
+	elif year == 2000:
+		print('Training Data (shapefiles) does not exist for this year (yet...)');sys.exit()
+
+	else:
+		print('Training Data (shapefiles) for this year is not available');sys.exit()
+
+	landcover_data  = gpd.read_file(path_class)  # dataframe containing class names
+	pixels_data     = gpd.read_file(path_pix)    # dataframe containing pixel values
 
 	pixels_data.insert(0, column='landcovers', value=landcover_data['landcovers'].values)
 
 	Truth_Data = pixels_data
 	Truth_Data.drop(columns=['geometry'], axis=1, inplace=True)
 
-	# created integer classes (ids) for classification
+	# create integer classes (ids) for classification:
 	classes   = Truth_Data['landcovers'].unique()
 	class_ids = np.arange(classes.size)+1
 
 	Truth_Data['id'] = Truth_Data['landcovers'].map(dict(zip(classes, class_ids)))
 
+	# the final dataframe containing the Training/Truth Data:
 	print('\nThe Truth Data include {n} classes: {labels}\n'.format(n=classes.size, labels=classes))
 	print(Truth_Data)
 
@@ -322,12 +337,12 @@ def SupervisedClassification(raster_arr, width, height):
 	# reshape array to image:
 	image = reshape_as_image(raster_arr)
 
-	# build model and make predict image:
+	# build model and predict image:
 	rf       = RandomForestClassifier(n_estimators=100,max_depth=4,oob_score=True,n_jobs=1,verbose=True)
 	model    = rf.fit(features,target.ravel())
 	pred_im  = rf.predict(image.reshape(-1, 6))
 
-	# reshaping prediction to image size:
+	# reshaping predictions to image size:
 	bilde = pred_im.reshape(height, width)
 
 	# define color map:
@@ -335,7 +350,7 @@ def SupervisedClassification(raster_arr, width, height):
 	nbr_cmap   = ListedColormap(nbr_colors)
 
 	# define class names:
-	cat_names   = ['water','urban/agriculture','forest']
+	cat_names   = ['water','urban','forest'] #['water','urban/agriculture','forest']
 	classes_ids = class_ids.tolist()
 
 	# plotting the predicted classes:
@@ -344,28 +359,12 @@ def SupervisedClassification(raster_arr, width, height):
 
 	ep.draw_legend(im_ax=im, classes=class_ids, titles=cat_names)
 	ax.set_title("Supervised Classification",fontsize=14)
-	ax.set_axis_off(); plt.tight_layout()
-	plt.show()
-
+	ax.set_axis_off(); plt.tight_layout(); plt.show()
+	
 	return Truth_Data, classes
 
 
-
-
 if __name__ == '__main__':
-
-    # Examples of running:
-
-    # plot false color with other than default:
-    #python main.py 1993 -FC [5,4,3]
-    #python main.py 1993 -FC [4,2,1]
-
-    # plot true and false color:
-    #python main.py 1993 -TC -FC
-    #python main.py 1993 -TC -FC [4,2,1]
-
-    # Spectral Signatures and Change Detection:
-    #python main.py 1993 --SpecSignatures -CD
 
     parser = argparse.ArgumentParser(description='Landsat Data - Oslo')
 
@@ -373,33 +372,28 @@ if __name__ == '__main__':
     parser.add_argument('year', type=int, choices=[1993, 2000], help='The year of Landsat Data')
 
     # Optional arguments:
-    parser.add_argument('-TC', '--TrueColor',  action='store_true', help='True Color Plot')
-    parser.add_argument('-FC', '--FalseColor', nargs='?', const='[4,3,2]', help='False Color Plot')
-
-    parser.add_argument('-SS',   '--SpecSignatures', action='store_true', help='Plot Spectral Signatures')
-    parser.add_argument('-NDVI', '--NDVIandClass',   action='store_true', help='Plot NDVI and NDVI classes')
-
-    parser.add_argument('-SC', '--Classification', action='store_true', help='Supervised Classification')
-    parser.add_argument('-CD', '--ChangeDetect',   action='store_true', help='Plot ChangeDetections')
-
+    parser.add_argument('-TC', '--TrueColor', action='store_true', help='True Color Plot')
+    parser.add_argument('-FC', '--FC', nargs='?', const='[3,2,1]', help='False Color Plot, default: [r=3,g=2,b=1]')
+    parser.add_argument('-SS', '--SpecSignature', action='store_true', help='Plot Spectral Signatures')
+    parser.add_argument('-VI', '--NDVIandClass', action='store_true', help='Plot NDVI and NDVI classes')
+    parser.add_argument('-SC', '--SuperClass', action='store_true', help='Supervised Classification')
+    parser.add_argument('-CD', '--ChangeDetect', action='store_true', help='Plot Change Detections')
 
     if len(sys.argv) < 2:
         sys.argv.append('--help')
     elif len(sys.argv) == 2:
         print('\nplease choose at least one positional arguments'); sys.exit()
 
-
     args           = parser.parse_args()
     yr 			   = args.year
     TrueColor 	   = args.TrueColor
-    FalseColor     = args.FalseColor
+    FalseColor     = args.FC
     ChangeDetect   = args.ChangeDetect
-    SpecSignatures = args.SpecSignatures
+    SpecSignatures = args.SpecSignature
     NDVI_and_Class = args.NDVIandClass
-    Classification = args.Classification
+    Classification = args.SuperClass
 
-
-    print('\n{heading} {year}'.format(heading=parser.description, year=yr))
+    print('\n{heading} {year}'.format(heading=parser.description, year=yr));print('-'*24)
 
     if yr == 1993:
         file = 'Prosjektdata/1993_tm_oslo.tif'
@@ -407,12 +401,22 @@ if __name__ == '__main__':
         file = 'Prosjektdata/2000_etm_oslo.tif'
 
     band_names  = ['Band 1','Band 2','Band 3','Band 4','Band 5','Band 7']
-    #array_bands = GetDataAndBands(file=file, crop=True, x1=70, x2=700, y1=850, y2=1000) # similar to x1=70, x2=770, y1=850, y2=1850 in CropImg
-    bands = GetDataAndBands(file=file, x1=30, y1=800, x2=800, y2=500, n=6, crop=True)
-    # All bands in a stack. Band 1, 2, 3, 4, 5 and 7
-    array_bands = np.stack([bands[0],bands[1],bands[2],bands[3],bands[4],bands[5]])
+    array_bands = GetDataAndBands(file=file, crop=True, x1=30, x2=800, y1=800, y2=500) # [x1=30, x2=830, y1=800, y2=1300] in CropImg
+    
+    '''
+    # Just for testing (can be deleted):
+    org_file = rio.open(file)
+    rast_arr = org_file.read().astype(float)
+    check = CropImg(img=rast_arr[3], x1=30, x2=830, y1=800, y2=1300)
+    plt.imshow(check);plt.show()
+    sys.exit()
+    '''
 
-    # if deafult crop, shape = (6, 1000, 700)
+    #bands = GetDataAndBands_2(file=file, x1=30, y1=800, x2=800, y2=500, n=6, crop=True)
+    # All bands in a stack. Band 1, 2, 3, 4, 5 and 7
+    #array_bands = np.stack([bands[0],bands[1],bands[2],bands[3],bands[4],bands[5]])
+
+    # shape of crop: (6, 500, 800)
     n_bands = array_bands.shape[0]
     height  = array_bands.shape[1]
     width   = array_bands.shape[2]
@@ -427,14 +431,14 @@ if __name__ == '__main__':
     if FalseColor:
         print('\n{text} {year} with [r,g,b] = {rgb}'.format(text="'False' color composition", year=yr, rgb=FalseColor))
         FalseColor = FalseColor.strip('][').split(',')
-        #r, g, b    = FalseColor[0], FalseColor[1], FalseColor[2]
-        #ColorComposition(array_bands, yr=yr, r=int(r), g=int(g), b=int(b))
-        ColorComposition(array_bands, yr=yr, r=3, g=2, b=1)
+        r, g, b    = FalseColor[0], FalseColor[1], FalseColor[2]
+        ColorComposition(array_bands, yr=yr, r=int(r), g=int(g), b=int(b))
 
 
     if SpecSignatures:
         print('\n{text} {year}'.format(text="Spectral Signatures", year=yr))
-        SpectralSignatures(bands, band_names, n_bands, year=yr, save=True)
+        #SpectralSignatures(bands, band_names, n_bands, year=yr, save=True)
+        SpectralSignatures(array_bands, band_names, n_bands, year=yr, save=True)
 
 
     if NDVI_and_Class:
@@ -444,7 +448,7 @@ if __name__ == '__main__':
 
     if Classification:
         print('\n{text} {year}'.format(text="Pixel-based Supervised Classification", year=yr))
-        TruthData, classes = SupervisedClassification(array_bands, width, height)
+        TruthData, classes = SupervisedClassification(array_bands, width, height, year=yr)
 
 
     if ChangeDetect:
@@ -452,99 +456,12 @@ if __name__ == '__main__':
 
         if yr == 1993:
             file_2000   = 'Prosjektdata/2000_etm_oslo.tif'
-            bands_2000  = GetDataAndBands(file=file_2000, x1=30, y1=800, x2=800, y2=500, n=6, crop=True)
+            bands_2000  = GetDataAndBands(file=file_2000, crop=True, x1=30, x2=800, y1=800, y2=500)
             bands_1993  = array_bands
             ChangeDetection(bands_1993, bands_2000, band_name='SWIR', ndi_of_ndvi=True)
 
         else:
-
             file_1993   = 'Prosjektdata/1993_tm_oslo.tif'
-            bands_1993  = GetDataAndBands(file=file_1993, x1=30, y1=800, x2=800, y2=500, n=6, crop=True)
+            bands_1993  = GetDataAndBands(file=file_1993, crop=True, x1=30, x2=800, y1=800, y2=500)
             bands_2000  = array_bands
             ChangeDetection(bands_1993, bands_2000, band_name='SWIR', ndi_of_ndvi=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # Spørsmål til oppgavene:
-    # 1) Holder det med vann og skog på spectral signatures?
-    # 2) Noe spesielt vi skal prøve å få frem på false color?
-    # 3) Hva er det rød på NDVI?
-    # 4) Kan det programmet (Focus) eksportere training data?
-    # 5) Change detection: skal vi ha plot for alle bandsa?
-
-    # NDWI: how to map water bodies?
-    # - NDWI uses green and near infrared bands to highlight water bodies
-
-
-    '''
-    # Setting up directory paths, good idea or not?
-    rootdir   = 'GEO4515/'      # kanskje unødvendig, men ved 'bakoverflytting' trengs det kanskje?
-
-    DataDir   = 'ProsjektData/' # Path to all data used, eventuelt bare kalle 'Data'
-                                # adda 'LabeledTrainingData' - hååååper å klare og lage dataene snart..
-                                # føler jeg kommer stadig nærmere as... men ja, mye nytt jeg ikke helt skjønner
-
-    ResultDir = 'Results/'      # Path to all results, with folders for each task maybe?
-
-    CodesDir  = 'Codes/'        # alle python scrips inn her etterhvert kanskje?
-                                # Må sikkert fikse lit på programmene først uten å fucka opp litt
-                                # from CodesDir import functions.py as F
-    '''
-
-    '''
-    # random example function in function.py
-
-    def ExampleFunc(bands, r=3, g=2, b=1, infolder=None, getfile=None, outfolder=None, newfile=None, save=False):
-        """
-        # Spørs jo veldig på funksjonen da,
-        # noen ganger bedre å skrive filnavn i funksjonen også,
-        # særlig outputs kanskje om man skal ha flere
-        # forutsetter vel også litt if tests, print statements om ikke filnavn er gitt osv osv...
-        """
-
-        SelectATiff = infolder+getfile
-        # en tilfeldig eksempel funksjon
-        ColorComposition(bands, r=2, g=1, b=0):
-
-        SelectATiff = infolder+getfile
-
-        if SaveResult == True
-        if newfile==None:
-            outfile = 'plot_r[%g]_g[%g]_b[%g].png' %(r, g, b) # husker helt med % på string xD
-            SaveRes = outfolder+outfile   # saved in ResultDir/SpectralSignatures/
-
-        # hm, noe sånt ish hvis tr
-        # elif newfile==str:
-    '''
-
-    '''
-    # in main.py:
-    import function.py as F
-    # example for running task1
-    outfile = 'experimentplot'     [%g]_g[%g]_b[%g].png' %(r, g, b)
-    ExampleFunc(r=3, g=2, b=1,
-				infolder=Datadir,
-				getfile='1993_tm_oslo.tif')
-				outfolder=ResultDir+'SpectralSignatures/''
-				outfile='JustTriedSomething'
-    '''
