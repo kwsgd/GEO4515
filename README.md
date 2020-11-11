@@ -32,7 +32,7 @@ optional arguments:
   -SC, --SuperClass     Supervised Classification  
   -CD, --ChangeDetect   Plot Change Detections  
 
-### **Additional Information:**
+#### **Additional Information:**
 * positional argument for year is required (1993 or 2000)
 * you should use at least one optional argument
 * optional arguments can be mixed and used at the same time
