@@ -98,11 +98,11 @@ def CropImg(img, x1, x2, y1, y2):
 	"""Function thats crops an image and returns it"""
 
 	crop = img[int(y1):int(y2), int(x1):int(x2)]
-
 	return crop
 
 
 def Water(x1, samples, n, bands):
+    """Water Samples"""
 
     x1      = x1
     water   = [[0] * n for i in range(samples)]
@@ -118,6 +118,7 @@ def Water(x1, samples, n, bands):
     return water
 
 def Forest(y1, samples, n, bands):
+    """Forest Samples"""
 
     y1       = y1
     forest   = [[0] * n_bands for i in range(samples)]
@@ -143,7 +144,6 @@ def mean(n, samples, bands):
 
         mean.append(np.mean(mean_))
         std.append(np.std(mean_))
-
     return mean, std
 
 
@@ -196,20 +196,17 @@ def NDVI(bands, year):
 	ndvi_class_bins    = [-np.inf, 0, 0.25, 0.5, 0.75, np.inf]
 	ndvi_landsat_class = np.digitize(ndvi, ndvi_class_bins)
 
-	# Define color map
-	nbr_colors = ['gray', 'y', 'yellowgreen', 'g', 'darkgreen']
-	nbr_cmap   = ListedColormap(nbr_colors)
-
-	# Define class names
-	ndvi_cat_names = ['No Vegetation','Bare Area','Low Vegetation','Moderate Vegetation','High Vegetation']
+	# Define color map and class names
+	ndvi_colors = ListedColormap(['gray', 'y', 'yellowgreen', 'g', 'darkgreen'])
+	ndvi_names = ['No Vegetation','Bare Area','Low Vegetation','Moderate Vegetation','High Vegetation']
 
 	# Get list of classes
 	classes = np.unique(ndvi_landsat_class).tolist()
 
 	fig, ax = plt.subplots(figsize=(8, 8))
-	im      = ax.imshow(ndvi_landsat_class, cmap=nbr_cmap)
+	im      = ax.imshow(ndvi_landsat_class, cmap=ndvi_colors)
 
-	ep.draw_legend(im_ax=im, classes=classes, titles=ndvi_cat_names)
+	ep.draw_legend(im_ax=im, classes=classes, titles=ndvi_names)
 	ax.set_title('Normalized Difference Vegetation Index (NDVI) Classes. \nYear: %s' %yr,fontsize=14)
 	ax.set_axis_off(); plt.tight_layout()
 	plt.show()
@@ -297,70 +294,63 @@ def ChangeDetection(bands_1993, bands_2000, band_name='SWIR', ndi_of_ndvi=False)
 		NDI_of_NDVI(ndvi_after, ndvi_before, title='NDI of NDVI', cmap='RdYlGn_r')
 
 
-def SupervisedClassification(raster_arr, width, height, year=1993):
+def SupervisedClassification(raster_arr, width, height, ColorTemplate, ClassTemplate, year=1993):
 	"""Pixel-based Supervised Classification of Image"""
 
 	if year == 1993:
 		path_class = 'shapefiles_1993/Truth_Data.shp'     # shapefile of class names
 		path_pix   = 'shapefiles_1993/New_shapefile.shp'  # shapefile of pixel values
-
 	elif year == 2000:
-		print('Training Data (shapefiles) does not exist for this year (yet...)');sys.exit()
-
+		path_class = 'shapefiles_2000/TrainingData.shp'   # shapefile of class names
+		path_pix   = 'shapefiles_2000/BandPixels.shp'     # shapefile of pixel values
 	else:
 		print('Training Data (shapefiles) for this year is not available');sys.exit()
 
-	landcover_data  = gpd.read_file(path_class)  # dataframe containing class names
-	pixels_data     = gpd.read_file(path_pix)    # dataframe containing pixel values
+	landcover_data = gpd.read_file(path_class)  # dataframe containing class names
+	pixels_data    = gpd.read_file(path_pix)    # dataframe containing pixel values
 
 	pixels_data.insert(0, column='landcovers', value=landcover_data['landcovers'].values)
+	pixels_data.drop(columns=['geometry'], axis=1, inplace=True)
+	
+	Truth_Data  = pixels_data.copy()                     
+	classes     = list(Truth_Data['landcovers'].unique()) # unique classes in dataframe
+	class_ids   = list(np.arange(1, len(classes)+1))      # integer classes (ids) for classification  
+	MatchNameID = dict(zip(classes, class_ids))           # create a dictionary of (names,ids):
 
-	Truth_Data = pixels_data
-	Truth_Data.drop(columns=['geometry'], axis=1, inplace=True)
+	if MatchNameID != ClassTemplate:
+		# if MatchNamesID has all expected keys, update to correct (names,ids)
+		if np.all([key in MatchNameID.keys() for key in ClassTemplate.keys()]) == True:
+			MatchNameID.update(ClassTemplate)
+		else:
+			print('missing expected landcover names');sys.exit()
 
-	# create integer classes (ids) for classification:
-	classes   = Truth_Data['landcovers'].unique()
-	class_ids = np.arange(classes.size)+1
-
-	Truth_Data['id'] = Truth_Data['landcovers'].map(dict(zip(classes, class_ids)))
+	Truth_Data['id'] = Truth_Data['landcovers'].map(MatchNameID)
 
 	# the final dataframe containing the Training/Truth Data:
-	print('\nThe Truth Data include {n} classes: {labels}\n'.format(n=classes.size, labels=classes))
+	print('\nThe Truth Data include {n} classes: {labels}\n'.format(n=len(classes), labels=classes))
 	print(Truth_Data)
 
-	# Inputs/features is the 6 landsat bands, and target is the class id:
-	features = Truth_Data.loc[:, (Truth_Data.columns != 'landcovers') & \
-								 (Truth_Data.columns != 'id')].values
-
-	target   = Truth_Data.loc[:,  Truth_Data.columns == 'id'].values
-
-	# reshape array to image:
-	image = reshape_as_image(raster_arr)
+	# inputs/features is the 6 landsat bands, and target is the class id:
+	features = Truth_Data.loc[:,(Truth_Data.columns!='landcovers')&(Truth_Data.columns!='id')].values
+	target   = Truth_Data.loc[:,Truth_Data.columns=='id'].values
 
 	# build model and predict image:
 	rf       = RandomForestClassifier(n_estimators=100,max_depth=4,oob_score=True,n_jobs=1,verbose=True)
 	model    = rf.fit(features,target.ravel())
-	pred_im  = rf.predict(image.reshape(-1, 6))
+	in_im    = reshape_as_image(raster_arr)      # reshape as image
+	pred_im  = rf.predict(in_im.reshape(-1, 6))
+	out_im   = pred_im.reshape(height, width)    # reshaping to image size
 
-	# reshaping predictions to image size:
-	bilde = pred_im.reshape(height, width)
-
-	# define color map:
-	nbr_colors = ['blue', 'grey', 'darkgreen']
-	nbr_cmap   = ListedColormap(nbr_colors)
-
-	# define class names:
-	cat_names   = ['water','urban','forest'] #['water','urban/agriculture','forest']
-	classes_ids = class_ids.tolist()
+	# define color map and class names:
+	colors  = ListedColormap([color for color in ColorTemplate.values()])
+	names   = [name for name in ClassTemplate.keys()]
 
 	# plotting the predicted classes:
 	fig, ax = plt.subplots()
-	im      = ax.imshow(bilde, cmap=nbr_cmap)
-
-	ep.draw_legend(im_ax=im, classes=class_ids, titles=cat_names)
-	ax.set_title("Supervised Classification",fontsize=14)
-	ax.set_axis_off(); plt.tight_layout(); plt.show()
-	
+	plot_im = ax.imshow(out_im, cmap=colors)
+	ep.draw_legend(im_ax=plot_im, classes=class_ids, titles=names)
+	ax.set_title('Supervised Classification - %s'%year, fontsize=14)
+	ax.set_axis_off();plt.tight_layout();plt.show()
 	return Truth_Data, classes
 
 
@@ -448,7 +438,11 @@ if __name__ == '__main__':
 
     if Classification:
         print('\n{text} {year}'.format(text="Pixel-based Supervised Classification", year=yr))
-        TruthData, classes = SupervisedClassification(array_bands, width, height, year=yr)
+        #CT  = {'water':'blue', 'urban':'grey', 'forest':'darkgreen'}
+        #CT  = {'water':'tab:blue', 'urban':'tab:grey', 'forest':'tab:green'}
+        CT  = {'water':'darkslategray', 'urban':'bisque', 'forest':'darkolivegreen'}
+        IT  = {'water':1, 'urban':2, 'forest':3}
+        TruthData, classes = SupervisedClassification(array_bands, width, height, CT, IT, year=yr)
 
 
     if ChangeDetect:
