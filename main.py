@@ -2,6 +2,7 @@
 # -----------------------------------------------------------------------------
 import os, gdal, sys, argparse
 
+from sklearn.model_selection import train_test_split
 from matplotlib.colors 	 import ListedColormap
 from sklearn.ensemble    import RandomForestClassifier
 from rasterio.plot 	     import reshape_as_image
@@ -14,6 +15,7 @@ import rasterio          as rio
 import earthpy           as et
 import earthpy.spatial   as es
 import earthpy.plot      as ep
+import pandas            as pd
 # -----------------------------------------------------------------------------
 
 def GetDataAndBands_2(file, x1, y1, x2, y2, n, crop=False):
@@ -173,11 +175,69 @@ def SpectralSignatures(bands, band_list, n_bands, year='', save=False):
     plt.plot(band_list, agg, 'y', label='Agg..?')
     plt.errorbar(band_list, water_mean, yerr=water_std, label='Error', fmt='.', color='black', ecolor='b') #lightgray
     plt.errorbar(band_list, forest_mean, yerr=forest_std, label='Error', fmt='.', color='black', ecolor='g')
-    plt.title("Spectral signatures, mean value for each band \n Year: %s" %yr, fontsize=15)
+    plt.title("Spectral signatures, mean value for each band \n Year: %s" %year, fontsize=15)
     plt.xlabel("Wavelength [$\\mu$m]", fontsize=15); plt.ylabel("DN", fontsize=15)
     plt.legend(fontsize=15)
     if save:
-        plt.savefig("Results/band_list_%s.png" %yr)
+        plt.savefig("Results/band_list_%s.png" %year)
+    plt.show()
+
+def SpectralSignatures2(band_list, year, save=False):
+    """ Spectral Signatures with Band Pixel Values from GGis"""
+
+    if year == '1993':
+        samples_1993 =  gpd.read_file('shapefiles_1993/merged.shp')
+        dictionary   = {'ClassNames':samples_1993['landcovers'],\
+                        'Band1':samples_1993['1993_tm__1'],\
+                        'Band2':samples_1993['1993_tm__2'],\
+                        'Band3':samples_1993['1993_tm__3'],\
+                        'Band4':samples_1993['1993_tm__4'],\
+                        'Band5':samples_1993['1993_tm__5'],\
+                        'Band7':samples_1993['1993_tm__6']}
+    elif year == '2000':
+        samples_2000 =  gpd.read_file('shapefiles_2000/merged.shp')
+        dictionary   = {'ClassNames':samples_2000['landcovers'],\
+                        'Band1':samples_2000['2000_etm_1'],\
+                        'Band2':samples_2000['2000_etm_2'],\
+                        'Band3':samples_2000['2000_etm_3'],\
+                        'Band4':samples_2000['2000_etm_4'],\
+                        'Band5':samples_2000['2000_etm_5'],\
+                        'Band7':samples_2000['2000_etm_6']}
+    else:
+    	print('Data not available for this year')
+
+    df = pd.DataFrame(dictionary)
+    df.set_index(['ClassNames'], inplace=True)
+        
+    water_data       = df[df.index == 'water'].copy()
+    forest_data      = df[df.index == 'forest'].copy()
+    urban_data       = df[df.index == 'urban'].copy()
+    agriculture_data = df[df.index == 'agriculture'].copy()
+    mean_water       = water_data.mean().to_numpy()
+    mean_forest      = forest_data.mean().to_numpy()
+    mean_urban       = urban_data.mean().to_numpy()
+    mean_agriculture = agriculture_data.mean().to_numpy()
+    std_water        = water_data.std().to_numpy()
+    std_forest       = forest_data.std().to_numpy()
+    std_urban        = urban_data.std().to_numpy()
+    std_agriculture  = agriculture_data.std().to_numpy()
+
+    plt.subplots(figsize=(10,6))
+    plt.plot(band_list, mean_water, 'b', label='Water')
+    plt.plot(band_list, mean_forest, 'g', label='Forest')
+    plt.plot(band_list, mean_agriculture, 'y', label='Agriculture')
+    plt.plot(band_list, mean_urban, 'm', label='Urban')
+    plt.errorbar(band_list, mean_water, yerr=std_water, label='Error', fmt='.', color='black', ecolor='b') #lightgray
+    plt.errorbar(band_list, mean_forest, yerr=std_water, label='Error', fmt='.', color='black', ecolor='g')
+    plt.errorbar(band_list, mean_agriculture, yerr=std_agriculture, label='Error', fmt='.', color='black', ecolor='y')
+    plt.errorbar(band_list, mean_urban, yerr=std_urban, label='Error', fmt='.', color='black', ecolor='m')
+    plt.title("Spectral signatures, mean value for each band \n Year: %s" %year, fontsize=15)
+    plt.xlabel("Wavelength [$\\mu$m]", fontsize=15);plt.ylabel("DN", fontsize=15)
+    plt.xticks(fontsize=13);plt.yticks(fontsize=13)
+    plt.legend(bbox_to_anchor=(1,0.5), loc='center left', fontsize=15)
+    plt.tight_layout()
+    if save:
+    	plt.savefig('Results/band_list_QGis_%s.png' %year)
     plt.show()
 
 
@@ -298,11 +358,17 @@ def SupervisedClassification(raster_arr, width, height, ColorTemplate, ClassTemp
 	"""Pixel-based Supervised Classification of Image"""
 
 	if year == 1993:
-		path_class = 'shapefiles_1993/Truth_Data.shp'     # shapefile of class names
-		path_pix   = 'shapefiles_1993/New_shapefile.shp'  # shapefile of pixel values
+		#path_class = 'shapefiles_1993/Truth_Data.shp'        # shapefile of class names
+		#path_pix   = 'shapefiles_1993/New_shapefile.shp'     # shapefile of pixel values
+		path_class = 'shapefiles_1993/PointSamples.shp'       # shapefile of class names
+		path_pix   = 'shapefiles_1993/4classesBandPixels.shp' # shapefile of pixel values
+		weights = {1:1, 2:0.5, 3:3, 4:1}
 	elif year == 2000:
-		path_class = 'shapefiles_2000/TrainingData.shp'   # shapefile of class names
-		path_pix   = 'shapefiles_2000/BandPixels.shp'     # shapefile of pixel values
+		#path_class = 'shapefiles_2000/TrainingData.shp'      # shapefile of class names
+		#path_pix   = 'shapefiles_2000/BandPixels.shp'        # shapefile of pixel values
+		path_class = 'shapefiles_2000/PointSamples.shp'       # shapefile of class names
+		path_pix   = 'shapefiles_2000/4classesBandPixels.shp' # shapefile of pixel values
+		weights = {1:1, 2:0.3, 3:3, 4:2}
 	else:
 		print('Training Data (shapefiles) for this year is not available');sys.exit()
 
@@ -315,7 +381,7 @@ def SupervisedClassification(raster_arr, width, height, ColorTemplate, ClassTemp
 	Truth_Data  = pixels_data.copy()                     
 	classes     = list(Truth_Data['landcovers'].unique()) # unique classes in dataframe
 	class_ids   = list(np.arange(1, len(classes)+1))      # integer classes (ids) for classification  
-	MatchNameID = dict(zip(classes, class_ids))           # create a dictionary of (names,ids):
+	MatchNameID = dict(zip(classes, class_ids))           # create a dictionary of (names,ids)
 
 	if MatchNameID != ClassTemplate:
 		# if MatchNamesID has all expected keys, update to correct (names,ids)
@@ -334,9 +400,18 @@ def SupervisedClassification(raster_arr, width, height, ColorTemplate, ClassTemp
 	features = Truth_Data.loc[:,(Truth_Data.columns!='landcovers')&(Truth_Data.columns!='id')].values
 	target   = Truth_Data.loc[:,Truth_Data.columns=='id'].values
 
+	X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.33, random_state=4515)
+
 	# build model and predict image:
-	rf       = RandomForestClassifier(n_estimators=100,max_depth=4,oob_score=True,n_jobs=1,verbose=True)
+	rf       = RandomForestClassifier(class_weight=weights,n_estimators=100,max_depth=4,oob_score=True,verbose=True,random_state=4515)
 	model    = rf.fit(features,target.ravel())
+	print(model.feature_importances_)
+
+	#model    = rf.fit(X_train,y_train.ravel())
+	#print(model.feature_importances_)
+	#print(rf.score(X_test, y_test.ravel()))
+	#sys.exit()
+
 	in_im    = reshape_as_image(raster_arr)      # reshape as image
 	pred_im  = rf.predict(in_im.reshape(-1, 6))
 	out_im   = pred_im.reshape(height, width)    # reshaping to image size
@@ -428,7 +503,10 @@ if __name__ == '__main__':
     if SpecSignatures:
         print('\n{text} {year}'.format(text="Spectral Signatures", year=yr))
         #SpectralSignatures(bands, band_names, n_bands, year=yr, save=True)
-        SpectralSignatures(array_bands, band_names, n_bands, year=yr, save=True)
+        #SpectralSignatures(array_bands, band_names, n_bands, year=yr, save=True)
+
+        # 1993 is a bit weird...maybe?
+        SpectralSignatures2(band_names, year=str(yr), save=True)
 
 
     if NDVI_and_Class:
@@ -440,8 +518,8 @@ if __name__ == '__main__':
         print('\n{text} {year}'.format(text="Pixel-based Supervised Classification", year=yr))
         #CT  = {'water':'blue', 'urban':'grey', 'forest':'darkgreen'}
         #CT  = {'water':'tab:blue', 'urban':'tab:grey', 'forest':'tab:green'}
-        CT  = {'water':'darkslategray', 'urban':'bisque', 'forest':'darkolivegreen'}
-        IT  = {'water':1, 'urban':2, 'forest':3}
+        CT  = {'water':'darkslategray','urban':'bisque','forest':'darkolivegreen','agriculture':'goldenrod'}
+        IT  = {'water':1,'urban':2,'forest':3,'agriculture':4}
         TruthData, classes = SupervisedClassification(array_bands, width, height, CT, IT, year=yr)
 
 
