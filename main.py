@@ -214,6 +214,7 @@ def SpectralSignatures2(band_list, year, save=False):
     std_urban        = urban_data.std().to_numpy()
     std_agriculture  = agriculture_data.std().to_numpy()
 
+
     plt.subplots(figsize=(10,6))
     plt.plot(band_list, mean_water, 'b', label='Water')
     plt.plot(band_list, mean_forest, 'g', label='Forest')
