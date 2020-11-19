@@ -250,7 +250,7 @@ def NDVI(bands, year):
 
 	# Define color map and class names
 	ndvi_colors = ListedColormap(['gray', 'y', 'yellowgreen', 'g', 'darkgreen'])
-	ndvi_names = ['No Vegetation','Bare Area','Low Vegetation','Moderate Vegetation','High Vegetation']
+	ndvi_names = ['0.00 No Vegetation','0.25 Bare Area','0.50 Low Vegetation','0.75 Moderate Vegetation','1.00 High Vegetation']
 
 	# Get list of classes
 	classes = np.unique(ndvi_landsat_class).tolist()
