@@ -1,12 +1,12 @@
-# GEO4515 - Project 2020 - Main program
+# GEO4515 - Project 2020
 # -----------------------------------------------------------------------------
 import os, gdal, sys, argparse
 
-from sklearn.model_selection import train_test_split
-from matplotlib.colors 	 import ListedColormap
-from sklearn.ensemble    import RandomForestClassifier
-from rasterio.plot 	     import reshape_as_image
-from rasterio.windows 	 import Window
+from sklearn.model_selection    import train_test_split
+from matplotlib.colors 	        import ListedColormap
+from sklearn.ensemble           import RandomForestClassifier
+from rasterio.plot 	            import reshape_as_image
+from rasterio.windows 	        import Window
 
 import matplotlib.pyplot as plt
 import numpy             as np
@@ -34,22 +34,20 @@ def GetDataAndBands_2(file, x1, y1, x2, y2, n, crop=False):
 	if crop :
 		returned array has shape (n_bands, y2, x2),
 	"""
-    band = []	# Har det noe aa si om det er array eller liste..????
+    band = []
     # Import data and separate bands
     if crop == True:
-        with rio.open(file) as src: # 'Prosjektdata/1993_tm_oslo.tif'
-            for i in range(1, n+1):				# Make 6 bands, 1-5 and 7
+        with rio.open(file) as src:
+            for i in range(1, n+1):		# For 6 bands, 1-5 and 7
                 band.append(src.read(i, window=Window(x1, y1, x2, y2)).astype(float))
     else:
         with rio.open(file) as src:
-            for i in range(1, n+1):				# Make 6 bands, 1-5 and 7
+            for i in range(1, n+1):
                 band.append(src.read(i))
 
     return band
 
 
-#FIKK IKKE TIL DENNE MED -SS, MEN DEN SER BEDRE UT....
-#Hmm, tror det funker nå hvertfall..?
 def GetDataAndBands(file, x1=70, x2=700, y1=850, y2=1000, crop=False):
 	"""Create array with the pixel values for each band
 
@@ -113,7 +111,6 @@ def Water(x1, samples, n, bands):
     for j in range(samples):
         for i in range(n_bands):
             x2 = x1+8
-            #water.append(np.mean(func.CropImg(img=bands[i], x1=210, x2=260, y1=415, y2=440)))
             water[j][i] = np.mean(CropImg(img=bands[i], x1=x1, x2=x2, y1=455, y2=490))
 
             x1 = x2+2
@@ -154,15 +151,10 @@ def SpectralSignatures(bands, band_list, n_bands, year='', save=False):
 
     samples = 5
 
-    '''
-    Vi maa finne noyaktige omraader for samples...!!!
-    '''
-
     agg = []
     # Crop out an agg area
     for i in range(n_bands):
         agg.append(np.mean(CropImg(img=bands[i], x1=566, x2=582, y1=183, y2=203)))
-        # Dette likner mer paa skog.... Sliter litt med x og y verdiene
 
     water  = Water(x1=235, samples=samples, n=n_bands, bands=bands)
     forest = Forest(y1=50, samples=samples, n=n_bands, bands=bands)
@@ -208,7 +200,7 @@ def SpectralSignatures2(band_list, year, save=False):
 
     df = pd.DataFrame(dictionary)
     df.set_index(['ClassNames'], inplace=True)
-        
+
     water_data       = df[df.index == 'water'].copy()
     forest_data      = df[df.index == 'forest'].copy()
     urban_data       = df[df.index == 'urban'].copy()
@@ -278,6 +270,12 @@ def NDI_of_NDVI(ndvi_after, ndvi_before, title='NDI of NDVI', cmap='RdYlGn_r'):
 	NDI_of_NDVI = (ndvi_after-ndvi_before)/(ndvi_after+ndvi_before)
 	ep.plot_bands(NDI_of_NDVI, cmap=cmap, cols=1, title=title, vmin=-1, vmax=1)
 
+def NDI(after, before, title='', cmap=''):
+	"""NDI = (AFTER - BEFORE)/(AFTER + BEFORE)"""
+
+	NDI = (after - before)/(after + before)
+	ep.plot_bands(NDI, cmap=cmap, title=title)
+
 
 def Difference(after, before, title='', cmap=''):
 	"""DIFFERENCE = (AFTER - BEFORE)"""
@@ -294,9 +292,9 @@ def Ratio(after, before, title='', cmap=''):
 
 
 def ChangeDetection(bands_1993, bands_2000, band_name='SWIR', ndi_of_ndvi=False):
-	""" Calculates And Plot Change Detections.
+    """ Calculates And Plot Change Detections.
 
-	Band 1 : Blue
+    Band 1 : Blue
 			 - Bathymetric mapping, distinguishing soil from vegetation and deciduous from coniferous vegetation
 
 	Band 2 : Green
@@ -312,46 +310,46 @@ def ChangeDetection(bands_1993, bands_2000, band_name='SWIR', ndi_of_ndvi=False)
 		     - Discriminates moisture content of soil and vegetation (penetrates thin clouds)
 	"""
 
-	if band_name == 'SWIR':
+    if band_name == 'SWIR':
 
-		before, after = bands_1993[4], bands_2000[4]
-		cmap_diff     = 'seismic_r'
+        before, after = bands_1993[4], bands_2000[4]
+        cmap_diff     = 'seismic_r'
+        cmap_rat 	  = 'seismic'
 
-	elif band_name == 'NIR':
+    elif band_name == 'NIR':
 
-		before, after = bands_1993[3], bands_2000[3]
-		cmap_diff     = 'Greens'
+        before, after = bands_1993[3], bands_2000[3]
+        cmap_diff     = 'Greens'
 
-	elif band_name == 'Red':
+    elif band_name == 'Red':
 
-		before, after = bands_1993[2], bands_2000[2]
-		cmap_diff     = 'RdGy_r'
-		cmap_rat 	  = 'seismic'
+        before, after = bands_1993[2], bands_2000[2]
+        cmap_diff     = 'RdGy_r'
+        cmap_rat 	  = 'seismic'
 
-	elif band_name == 'Green':
+    elif band_name == 'Green':
 
-		before, after = bands_1993[1], bands_2000[1]
-		cmap_diff     = 'YlGn'
+        before, after = bands_1993[1], bands_2000[1]
+        cmap_diff     = 'YlGn'
 
-	elif band_name == 'Blue':
+    elif band_name == 'Blue':
 
-		before, after = bands_1993[0], bands_2000[0]
-		cmap_diff     = 'PuOr'
+        before, after = bands_1993[0], bands_2000[0]
+        cmap_diff     = 'PuOr'
 
-	else:
-		print("Invalid band_number, use one from ['Blue', 'Green', 'Red', 'NIR', 'SWIR']")
+    else:
+        print("Invalid band_number, use one from ['Blue', 'Green', 'Red', 'NIR', 'SWIR']")
 
+    Difference(after, before, title='%s difference [1993 - 2000]' %band_name, cmap=cmap_diff)
+    Ratio(after, before,      title='%s ratio [1993 - 2000]' %band_name, cmap=cmap_rat) #only defined cmap_rat for red
+    NDI(after, before,        title='%s NDI [1993 - 2000]' %band_name, cmap=cmap_diff)
 
-	Difference(after, before, title='%s difference [1993 - 2000]' %band_name, cmap=cmap_diff)
-
-	#Ratio(after, before, title='%s ratio [1993 - 2000]' %band_name, cmap=cmap_rat) only defined cmap_rat for red
-
-	if ndi_of_ndvi:
-		# suppress RuntimeWarning (probably because of NaN)
-		np.seterr(divide='ignore', invalid='ignore')
-		ndvi_before = es.normalized_diff(bands_1993[3], bands_1993[2])
-		ndvi_after  = es.normalized_diff(bands_2000[3], bands_2000[2])
-		NDI_of_NDVI(ndvi_after, ndvi_before, title='NDI of NDVI', cmap='RdYlGn_r')
+    if ndi_of_ndvi:
+        # suppress RuntimeWarning (probably because of NaN)
+        np.seterr(divide='ignore', invalid='ignore')
+        ndvi_before = es.normalized_diff(bands_1993[3], bands_1993[2])
+        ndvi_after  = es.normalized_diff(bands_2000[3], bands_2000[2])
+        NDI_of_NDVI(ndvi_after, ndvi_before, title='NDI of NDVI', cmap='RdYlGn_r')
 
 
 def SupervisedClassification(raster_arr, width, height, ColorTemplate, ClassTemplate, year=1993):
@@ -377,10 +375,10 @@ def SupervisedClassification(raster_arr, width, height, ColorTemplate, ClassTemp
 
 	pixels_data.insert(0, column='landcovers', value=landcover_data['landcovers'].values)
 	pixels_data.drop(columns=['geometry'], axis=1, inplace=True)
-	
-	Truth_Data  = pixels_data.copy()                     
+
+	Truth_Data  = pixels_data.copy()
 	classes     = list(Truth_Data['landcovers'].unique()) # unique classes in dataframe
-	class_ids   = list(np.arange(1, len(classes)+1))      # integer classes (ids) for classification  
+	class_ids   = list(np.arange(1, len(classes)+1))      # integer classes (ids) for classification
 	MatchNameID = dict(zip(classes, class_ids))           # create a dictionary of (names,ids)
 
 	if MatchNameID != ClassTemplate:
@@ -467,15 +465,6 @@ if __name__ == '__main__':
 
     band_names  = ['Band 1','Band 2','Band 3','Band 4','Band 5','Band 7']
     array_bands = GetDataAndBands(file=file, crop=True, x1=30, x2=800, y1=800, y2=500) # [x1=30, x2=830, y1=800, y2=1300] in CropImg
-    
-    '''
-    # Just for testing (can be deleted):
-    org_file = rio.open(file)
-    rast_arr = org_file.read().astype(float)
-    check = CropImg(img=rast_arr[3], x1=30, x2=830, y1=800, y2=1300)
-    plt.imshow(check);plt.show()
-    sys.exit()
-    '''
 
     #bands = GetDataAndBands_2(file=file, x1=30, y1=800, x2=800, y2=500, n=6, crop=True)
     # All bands in a stack. Band 1, 2, 3, 4, 5 and 7
@@ -502,10 +491,7 @@ if __name__ == '__main__':
 
     if SpecSignatures:
         print('\n{text} {year}'.format(text="Spectral Signatures", year=yr))
-        #SpectralSignatures(bands, band_names, n_bands, year=yr, save=True)
-        #SpectralSignatures(array_bands, band_names, n_bands, year=yr, save=True)
 
-        # 1993 is a bit weird...maybe?
         SpectralSignatures2(band_names, year=str(yr), save=True)
 
 
